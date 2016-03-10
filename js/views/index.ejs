@@ -1,0 +1,198 @@
+<!-- views/index.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>10,000 Leads</title>
+
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="ui/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="ui/semantic.min.js"></script>
+
+    <script>
+      $(document)
+        .ready(function() {
+
+
+            $('#getstarted, #checkitout').click(function() {
+                <% if (user) { %>
+                    window.location.replace("/payment");
+                <% } else { %>
+                    window.location.replace("/signup");
+                <% } %>
+            });
+
+          // fix menu when passed
+          $('.masthead')
+            .visibility({
+              once: false,
+              onBottomPassed: function() {
+                $('.fixed.menu').transition('fade in');
+              },
+              onBottomPassedReverse: function() {
+                $('.fixed.menu').transition('fade out');
+              }
+            });
+
+          // create sidebar and attach to menu open
+          $('.ui.sidebar')
+            .sidebar('attach events', '.toc.item');
+
+        });
+      </script>
+</head>
+<body>
+
+<!-- Following Menu -->
+<div class="ui large top fixed hidden menu">
+  <div class="ui container">
+    <a class="active item">Home</a>
+    <a class="item" href="/scraper">Crawler</a>
+
+    <div class="right menu">
+        <% if (user) { %>
+            <div class="item">
+                <a class="ui button" href="/logout">Logout <%= user.local.email %></a>
+            </div>
+        <% } else { %>
+            <div class="item">
+                <a class="ui button" href="/login">Log in</a>
+            </div>
+            <div class="item">
+                <a class="ui primary button" href="/signup">Sign Up</a>
+            </div>
+        <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Menu -->
+<div class="ui vertical inverted sidebar menu">
+  <a class="active item" href="/">Home</a>
+  <a class="item" href="/scraper">Crawler</a>
+  <a class="item" href="/login">Login</a>
+  <a class="item" href="/signup">Signup</a>
+</div>
+
+
+<!-- Page Contents -->
+<div class="pusher">
+  <div class="ui inverted vertical masthead center aligned segment">
+
+    <div class="ui container">
+      <div class="ui large secondary inverted pointing menu">
+        <a class="toc item">
+          <i class="sidebar icon"></i>
+        </a>
+        <a class="active item" href="/">Home</a>
+        <a class="item" href="/scraper">Crawler</a>
+        
+        <div class="right item">
+            <% if (user) { %>
+                <a class="ui inverted button" href="/logout">Logout <%= user.local.email %></a>
+            <% } else { %>
+                <a class="ui inverted button" href="/login">Log in</a>
+                <a class="ui inverted button" href="/signup">Sign Up</a>
+            <% } %>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="ui text container">
+      <h1 class="ui inverted header">
+        10,000 Leads
+      </h1>
+      <h2>Instantly crawl the Yellow Pages for new business leads</h2>
+      <div class="ui huge primary button" id="getstarted">Get Started <i class="right arrow icon"></i></div>
+    </div>
+
+  </div>
+
+  <div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+      <div class="row">
+        <div class="eight wide column">
+          <h3 class="ui header">Expand your marketing</h3>
+          <p>Our state of the art crawler will pull all available data from hundreds of pages instantly based on your search parameters; create a contact list including phone numbers, website addresses, location.</p>
+          <h3 class="ui header">Contact database</h3>
+          <p>Save contacts for future follow-up, create custom contact lists, mark notes and more. </p>
+        </div>
+        <div class="six wide right floated column">
+          <img src="img/capture.png" class="ui large bordered rounded image">
+        </div>
+      </div>
+      <div class="row">
+        <div class="center aligned column">
+          <a class="ui huge button" id="checkitout">Check it out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="ui vertical stripe quote segment">
+    <div class="ui equal width stackable internally celled grid">
+      <div class="center aligned row">
+        <div class="column">
+          <h3>"Absolutely essential"</h3>
+          <p>The best way to expand your business and aquire new leads</p>
+        </div>
+        <div class="column">
+          <h3>"I can access my contacts from anywhere"</h3>
+          <p>Access your contact list and search for new ones with our cloud based service</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui vertical stripe segment">
+    <div class="ui text container">
+      <h3 class="ui header">The quickest way to find B2B leads</h3>
+      <p>Don't waste time manually looking for new leads, instantly generate a list in seconds and corner any market out there.</p>
+      <a class="ui large button" href="/signup">Sign up</a>
+    </div>
+  </div>
+
+    <div class="ui img container">
+        <br>
+        <img src="img/mainscreen.png" alt="" class="ui fluid bordered rounded image">
+        <br>
+    </div>
+
+
+  <div class="ui inverted vertical footer segment">
+    <div class="ui container">
+      <div class="ui stackable inverted divided equal height stackable grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">About</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Sitemap</a>
+            <a href="#" class="item">Contact Us</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Services</h4>
+          <div class="ui inverted link list">
+            <a href="http://nobilisd.mywhc.ca/" class="item">Website Design & Development</a>
+            <a href="http://nobilisd.mywhc.ca/mobile.html" class="item">Mobile development</a>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Crawling Services</h4>
+          <p>Contact us for a customized web scraping solution to service your business needs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>
