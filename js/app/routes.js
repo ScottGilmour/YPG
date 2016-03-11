@@ -1,5 +1,6 @@
 var stripe = require("stripe")("sk_test_4Z6MsyQ0i4xl0Zm6JWR5wwrq");
 var Contact = require('../app/models/contact');
+var User = require('../app/models/user');
 var moment = require('moment');
 
 module.exports = function(app, passport) {
@@ -185,12 +186,51 @@ module.exports = function(app, passport) {
     //Webhook callback for stripe, sends event data
     app.post("/10kleads/webhook", function(request, response) {
       // Retrieve the request's body and parse it as JSON
-      var event_json = JSON.parse(request.body);
+      var event_json = request.body;
+
+      if (event_json) {
+        //Get the customer ID
+        var cus_id = event_json.data.object.customer; 
+
+        //Get the corresponding user for id
+        User.find({
+            'local.subscription.id' : cus_id
+        }).exec(function(err, user) {
+            if (err) {
+                throw err;
+                res.sendStatus(403);
+            }
+
+            //Handle event type
+            if (event_json.type == 'charge.succeeded') {
+                //Set active_until one month from today
+                var new_date = new Date();
+
+                var moment_date = moment(new_date);
+                moment_date.add(1, 'months');
+
+                user.local.member = true;
+                user.local.active_until = moment_date;
+            } else if (event_json.type == 'charge.failed' || event_json.type == 'charge.refunded') {
+                user.local.member = false;
+                user.local.active_until = new Date();
+            }
+
+            //Save user object and return 200
+            user.save(function(err) {
+                if (err)
+                    throw err;
+            });
+
+
+            res.sendStatus(200);
+        });
+      }
 
       // Do something with event_json
       console.log(event_json);
 
-      response.send(200);
+      response.sendStatus(403);
     });
 
     app.post('/create_subscription', isLoggedIn, function(req, res) {
