@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <% if (user.local.member) { %>
+    <% if (user.local.active_until > new Date()) { %>
 
     <div class="ui segment">
       <table class="ui celled table">

@@ -1,5 +1,11 @@
 $(document).ready(function() {
 	$('#submitbtn').click(function(rs) {
-            $('#loginform').submit();
-        });
+        $('#loginform').submit();
+    });
+
+    $('#passfield').keydown(function(event) {
+    	if (event.which == 13) {
+    		$('#loginform').submit();
+    	}
+    });
 });

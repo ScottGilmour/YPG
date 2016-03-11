@@ -1,5 +1,5 @@
 body {
-  background-color: #DADADA;
+  	background-image: url("../img/pw_maze_black.png");
 }
 
 body > .grid {

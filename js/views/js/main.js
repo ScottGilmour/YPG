@@ -36,7 +36,6 @@ $(document).ready(function() {
 
 
 	function fetchListings(query, loc, pg) {
-
 		$.ajax({
 				url: '/scrape',
 				type: 'GET',

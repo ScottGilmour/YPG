@@ -29,17 +29,16 @@
             <div class="field">
               <div class="ui left icon input">
                 <i class="lock icon"></i>
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" name="password" placeholder="Password" id="passfield">
               </div>
             </div>
             <div id="submitbtn" class="ui fluid large teal submit button">Login</div>
           </div>
-                
-            <% if (message.length > 0) { %>
+        </form>
+
+        <% if (message.length > 0) { %>
                 <div class="ui error message"><%= message %></div>
             <% } %>
-
-        </form>
 
         <div class="ui message">
           New to us? <a href="/signup">Sign Up</a>

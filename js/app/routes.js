@@ -1,4 +1,6 @@
+var stripe = require("stripe")("sk_test_4Z6MsyQ0i4xl0Zm6JWR5wwrq");
 var Contact = require('../app/models/contact');
+var moment = require('moment');
 
 module.exports = function(app, passport) {
 
@@ -180,35 +182,57 @@ module.exports = function(app, passport) {
         }
     });
 
+    //Webhook callback for stripe, sends event data
+    app.post("/10kleads/webhook", function(request, response) {
+      // Retrieve the request's body and parse it as JSON
+      var event_json = JSON.parse(request.body);
+
+      // Do something with event_json
+      console.log(event_json);
+
+      response.send(200);
+    });
+
     app.post('/create_subscription', isLoggedIn, function(req, res) {
         var user = req.user;
-        var stripe = require("stripe")("sk_test_4Z6MsyQ0i4xl0Zm6JWR5wwrq");
         var stripeToken = req.body.stripeToken;
 
         if (!user) {
             res.redirect('/');
         } else {
-            var charge = stripe.charges.create({
-                amount: 5000, // amount in cents, again
-                currency: "cad",
-                source: stripeToken,
-                description: "YellowPageCrawler"
-            }, function(err, charge) {
-              if (err && err.type === 'StripeCardError') {
-                console.log('declined');
-                res.redirect('/payment');
-              } else {
-                console.log('accepted');
-                user.local.member = true;
 
-                // save the user
-                user.save(function(err) {
-                    if (err)
-                        throw err;
-                });
+            //Create the customer
+            stripe.customers.create({
+              source: stripeToken, // obtained with Stripe.js
+              plan: "unlimited",
+              email: user.local.email
+            }, function(err, customer) {
+              // asynchronously called
 
-                res.redirect('/scraper');
+              if (err) {
+                res.send(err);
               }
+
+              //Set customer object to user model
+              user.local.subscription = customer;
+
+              //Set active_until one month from today
+              var new_date = new Date();
+
+              var moment_date = moment(new_date);
+              moment_date.add(1, 'months');
+
+              user.local.member = true;
+              user.local.active_until = moment_date;
+
+              // save the user
+              user.save(function(err) {
+                if (err)
+                    throw err;
+              });
+
+              res.redirect('/scraper');
+
             });
         }
     });

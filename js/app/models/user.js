@@ -13,6 +13,8 @@ var userSchema = mongoose.Schema({
         password     : String,
         member       : Boolean,
         locale       : String,
+        active_until : Date,
+        subscription : mongoose.Schema.Types.Mixed
     },
     facebook         : {
         id           : String,
