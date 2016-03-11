@@ -1,4 +1,4 @@
-var stripe = require("stripe")("sk_test_4Z6MsyQ0i4xl0Zm6JWR5wwrq");
+var stripe = require("stripe")("pk_live_vnJDWr7sFw92bq8XoD8X6JsU");
 var Contact = require('../app/models/contact');
 var User = require('../app/models/user');
 var moment = require('moment');
