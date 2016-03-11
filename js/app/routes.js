@@ -222,6 +222,8 @@ module.exports = function(app, passport) {
                     user_obj.local.active_until = new Date();
                 }
 
+                console.log(user_obj);
+
                 //Save user object and return 200
                 user_obj.save(function(err) {
                     if (err)
