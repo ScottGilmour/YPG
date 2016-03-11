@@ -200,12 +200,12 @@ module.exports = function(app, passport) {
         }).exec(function(err, user_obj) {
             if (err) {
                 console.log(err);
-                res.sendStatus(403);
+                response.sendStatus(403);
             }
 
             if (!user_obj.local) {
                 console.log('No user found');
-                res.sendStatus(403);
+                response.sendStatus(403);
             } else {
                 //Handle event type
                 if (event_json.type == 'charge.succeeded') {
@@ -231,7 +231,7 @@ module.exports = function(app, passport) {
                 });
 
 
-                res.sendStatus(200);
+                response.sendStatus(200);
             }
         });
       }
