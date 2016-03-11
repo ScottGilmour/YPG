@@ -203,7 +203,7 @@ module.exports = function(app, passport) {
                 res.sendStatus(403);
             }
 
-            if (!user_obj) {
+            if (!user_obj.local) {
                 console.log('No user found');
                 res.sendStatus(403);
             } else {
