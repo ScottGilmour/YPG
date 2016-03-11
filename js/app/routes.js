@@ -199,14 +199,12 @@ module.exports = function(app, passport) {
             'local.subscription.id' : cus_id
         }).exec(function(err, user_obj) {
 
-            console.log('user_obj');
-
             if (err) {
                 console.log(err);
                 response.sendStatus(403);
             }
 
-            if (!user_obj.local) {
+            if (!user_obj) {
                 console.log('No user found');
                 response.sendStatus(403);
             } else {
@@ -224,8 +222,6 @@ module.exports = function(app, passport) {
                     user_obj.local.member = false;
                     user_obj.local.active_until = new Date();
                 }
-
-                console.log(user_obj);
 
                 //Save user object and return 200
                 user_obj.save(function(err) {
