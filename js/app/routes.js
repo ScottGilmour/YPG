@@ -2,6 +2,15 @@ var stripe = require("stripe")("pk_live_vnJDWr7sFw92bq8XoD8X6JsU");
 var Contact = require('../app/models/contact');
 var User = require('../app/models/user');
 var moment = require('moment');
+var jsforce = require('jsforce');
+
+var oauth2 = new jsforce.OAuth2({
+    // you can change loginUrl to connect to sandbox or prerelease env.
+    // loginUrl : 'https://test.salesforce.com',
+    clientId : '3MVG9zeKbAVObYjPfbOmOwbeRd2rWjKeMGFiCvIn__L.BC91QxzNwU5vMaliux_DHUaG0X4U7b13q14k9jguX',
+    clientSecret : '5889250564520434839',
+    redirectUri : 'https://104.196.23.57/oauth_callback'
+});
 
 module.exports = function(app, passport) {
 
@@ -27,6 +36,31 @@ module.exports = function(app, passport) {
         res.render('contacts.ejs', {
             user : req.user // get the user out of session and pass to template
         });
+    });
+
+    app.get('/oauth_callback', function(req, res) {
+        var conn = new sf.Connection({ oauth2 : oauth2 });
+        var code = req.param('code');
+        conn.authorize(code, function(err, userInfo) {
+        if (err) { return console.error(err); }
+            // Now you can get the access token, refresh token, and instance URL information.
+            // Save them to establish connection next time.
+            console.log(conn.accessToken);
+            console.log(conn.refreshToken);
+            console.log(conn.instanceUrl);
+            console.log("User ID: " + userInfo.id);
+            console.log("Org ID: " + userInfo.organizationId);
+            // ...
+        });
+
+        res.sendStatus(200);
+    });
+
+    //
+    // Get authz url and redirect to it.
+    //
+    app.get('/oauth2/auth', function(req, res) {
+        res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
     });
 
     app.post('/delete_contact', isLoggedIn, function(req, res) {
