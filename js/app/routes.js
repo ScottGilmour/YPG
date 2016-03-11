@@ -201,6 +201,10 @@ module.exports = function(app, passport) {
                 res.sendStatus(403);
             }
 
+            if (!user) {
+                res.sendStatus(403);
+            }
+
             //Handle event type
             if (event_json.type == 'charge.succeeded') {
                 //Set active_until one month from today
