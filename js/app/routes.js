@@ -195,9 +195,12 @@ module.exports = function(app, passport) {
         console.log(cus_id);
 
         //Get the corresponding user for id
-        User.find({
+        User.findOne({
             'local.subscription.id' : cus_id
         }).exec(function(err, user_obj) {
+
+            console.log('user_obj');
+
             if (err) {
                 console.log(err);
                 response.sendStatus(403);
@@ -238,8 +241,6 @@ module.exports = function(app, passport) {
 
       // Do something with event_json
       console.log(event_json);
-
-      response.sendStatus(403);
     });
 
     app.post('/create_subscription', isLoggedIn, function(req, res) {
