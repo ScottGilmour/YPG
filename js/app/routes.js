@@ -192,42 +192,45 @@ module.exports = function(app, passport) {
         //Get the customer ID
         var cus_id = event_json.data.object.customer; 
 
+        console.log(cus_id);
+
         //Get the corresponding user for id
         User.find({
             'local.subscription.id' : cus_id
-        }).exec(function(err, user) {
+        }).exec(function(err, user_obj) {
             if (err) {
-                throw err;
+                console.log(err);
                 res.sendStatus(403);
             }
 
             if (!user) {
+                console.log('No user found');
                 res.sendStatus(403);
+            } else {
+                //Handle event type
+                if (event_json.type == 'charge.succeeded') {
+                    //Set active_until one month from today
+                    var new_date = new Date();
+
+                    var moment_date = moment(new_date);
+                    moment_date.add(1, 'months');
+
+                    user_obj.local.member = true;
+                    user_obj.local.active_until = moment_date;
+                } else if (event_json.type == 'charge.failed' || event_json.type == 'charge.refunded') {
+                    user_obj.local.member = false;
+                    user_obj.local.active_until = new Date();
+                }
+
+                //Save user object and return 200
+                user_obj.save(function(err) {
+                    if (err)
+                        throw err;
+                });
+
+
+                res.sendStatus(200);
             }
-
-            //Handle event type
-            if (event_json.type == 'charge.succeeded') {
-                //Set active_until one month from today
-                var new_date = new Date();
-
-                var moment_date = moment(new_date);
-                moment_date.add(1, 'months');
-
-                user.local.member = true;
-                user.local.active_until = moment_date;
-            } else if (event_json.type == 'charge.failed' || event_json.type == 'charge.refunded') {
-                user.local.member = false;
-                user.local.active_until = new Date();
-            }
-
-            //Save user object and return 200
-            user.save(function(err) {
-                if (err)
-                    throw err;
-            });
-
-
-            res.sendStatus(200);
         });
       }
 
