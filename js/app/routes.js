@@ -50,7 +50,7 @@ module.exports = function(app, passport) {
 
 
         var conn = new jsforce.Connection({ oauth2 : oauth2 });
-        var code = req.param.code;
+        var code = req.param(code);
 
         console.log(code);
 
