@@ -87,8 +87,9 @@ module.exports = function(app, passport) {
     
     app.post('/sf/create_lead', isLoggedIn, function(req, res) {
         var user = req.user;
+        var lead = req.body.lead;
 
-        if (user && user.salesforce.active) {
+        if (user && user.salesforce.active && lead) {
 
             //Create conn
             var conn = new jsforce.Connection({
@@ -96,8 +97,40 @@ module.exports = function(app, passport) {
                 accessToken : user.salesforce.conn.access_token
             });
 
+            //created at date - CreatedDate
+            //NumberOfEmployees
+            //AnnualRevenue
+            //firstName + LastName
+            //Industry
+            //Lead Source
+            //Title
+            //Company
+            //Website
+            //Email
+            //Phone
+            //Street
+            //City
+            //State/Province
+            //Postal
+            //Country
+
+            console.log(lead);
+
             // Single record creation
-            conn.sobject("Account").create({ Name : 'My Account #1' }, function(err, ret) {
+            conn.sobject("Lead").create({ 
+                CreatedDate: new Date(),
+                Title: lead.title,
+                Company: lead.title,
+                Website: lead.website,
+                Phone: lead.phone,
+                Street: lead.addr,
+                City: lead.city,
+                LeadSource: 'Web',
+                Country: 'Canada',
+                PostalCode: lead.postal,
+                State: lead.region,
+                LastName: 'N/A'
+            }, function(err, ret) {
                 if (err || !ret.success) { return console.error(err, ret); }
                 console.log("Created record id : " + ret.id);
             });

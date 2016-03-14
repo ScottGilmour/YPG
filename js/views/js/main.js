@@ -118,6 +118,7 @@ $(document).ready(function() {
 				element.off();
 			});
 			
+			saveLeadToSF(contentData);
 		});
 	}
 
@@ -127,7 +128,7 @@ $(document).ready(function() {
 			//Append new table row
 			var html = '<tr id="result_row_' + i + '">';
 
-			html += '<td>' + '<a class="save_row" id="'+i+'"> <i class="large save icon"></i> </a>  <a class="delete_row"><i class="large trash icon"></i></a> ' + '</td>'
+			html += '<td>' + '<a class="save_row" id="'+i+'"> <i class="large save icon"></i> </a>  <a class="delete_row"><i class="large trash icon"></i></a> ' + '</td>';
 
 			html += '<td>' + rs[i].title + '</td>';
 			html += '<td>' + rs[i].addr + '</td>';
@@ -187,10 +188,45 @@ $(document).ready(function() {
 		} 
 	});
 
-	$('#sfBtn').click(function(ev) {
-		$.ajax({
+	function saveLeadToSF(lead) {
+		//created at date - CreatedDate
+        //NumberOfEmployees
+        //AnnualRevenue
+        //firstName + LastName
+        //Industry
+        //Lead Source
+        //Title
+        //Company
+        //Website
+        //Email
+        //Phone
+        //Street
+        //City
+        //State/Province
+        //Postal
+        //Country
+
+        var new_lead = {
+        	CreatedDate: new Date(),
+        	Title: lead.title,
+        	Company: lead.title,
+        	Website: lead.website,
+        	Phone: lead.phone,
+        	Street: lead.addr,
+        	City: lead.city,
+        	LeadSource: 'Web',
+        	Country: 'Canada',
+        	PostalCode: lead.postal,
+        	State: lead.region,
+        	LastName: 'N/A'
+        };
+
+        $.ajax({
 			url: '/sf/create_lead',
-			type: 'post'
+			type: 'post',
+			data: {
+				lead: new_lead
+			}
 		})
 		.done(function() {
 			console.log("success");
@@ -201,7 +237,5 @@ $(document).ready(function() {
 		.always(function() {
 			console.log("complete");
 		});
-		
-	});
-
+	}
 });
