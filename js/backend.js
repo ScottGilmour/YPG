@@ -55,9 +55,5 @@ app.get('*', function(req, res, next) {
 });
 
 
-server = https.createServer(https_options, app).listen(port, host);
-console.log('HTTPS Server listening on %s:%s', port, host);
-
-// launch ======================================================================
-app.listen(port);
-console.log('The magic happens on port ' + port);
+server = https.createServer(https_options, app).listen(port);
+console.log('HTTPS Server listening on %s:%s', port);
