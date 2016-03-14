@@ -8,8 +8,8 @@ var request = require('request');
 var oauth2 = new jsforce.OAuth2({
     // you can change loginUrl to connect to sandbox or prerelease env.
     // loginUrl : 'https://test.salesforce.com',
-    clientId : '3MVG9uudbyLbNPZMWNKrkgrrySZogYGZv2V1JneS1.2Y01kADEsXZqPx4gT_OjdumPTJxMDjZcaZfatiYW8nF',
-    clientSecret : '406328354480100196',
+    clientId : '3MVG9uudbyLbNPZMuJ_whDoem4Oq1BOFCZJYvmwQu4IJJg1.OYOX7ZrZ.oleBVakdqimWQy2cgLUX1tOXO_oP',
+    clientSecret : '7416359387124722568',
     redirectUri : 'https://104.196.23.57/oauth_callback'
 });
 
