@@ -22,17 +22,15 @@ var userSchema = mongoose.Schema({
         email        : String,
         name         : String
     },
-    twitter          : {
+    salesforce       : {
+        active       : Boolean,
         id           : String,
-        token        : String,
-        displayName  : String,
-        username     : String
-    },
-    google           : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
+        org_id       : String,
+        conn         : {
+            access_token  : String,
+            refresh_token : String,
+            instance_url  : String
+        }
     }
 
 });

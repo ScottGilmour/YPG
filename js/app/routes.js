@@ -39,9 +39,10 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/oauth_callback', function(req, res) {
+    app.get('/oauth_callback', isLoggedIn, function(req, res) {
         var error_msg = req.query.error;
         var error_desc = req.query.error_description;
+        var user = req.user;
 
         if (error_msg) {
 
@@ -49,7 +50,8 @@ module.exports = function(app, passport) {
 
 
         var conn = new jsforce.Connection({ oauth2 : oauth2 });
-        var code = req.param('code');
+        var code = req.param.code;
+
         conn.authorize(code, function(err, userInfo) {
         if (err) { return console.error(err); }
             // Now you can get the access token, refresh token, and instance URL information.
@@ -59,10 +61,38 @@ module.exports = function(app, passport) {
             console.log(conn.instanceUrl);
             console.log("User ID: " + userInfo.id);
             console.log("Org ID: " + userInfo.organizationId);
-            // ...
+
+            //Save the information to user model
+            user.salesforce.active = true;
+
+            user.salesforce.id = userInfo.id;
+            user.salesforce.org_id = userInfo.organizationId;
+            user.salesforce.conn.access_token = conn.accessToken;
+            user.salesforce.conn.refresh_token = conn.refreshToken;
+            user.salesforce.conn.instance_url = conn.instanceUrl;
+
+
+            //Save the user
+            user.save(function(err) {
+                if (err)
+                    throw err;
+            });
+
         });
 
         res.sendStatus(200);
+    });
+    
+    app.post('/sf/create_lead', isLoggedIn, function(req, res) {
+        var user = req.user;
+
+        if (user) {
+            // Single record creation
+            conn.sobject("Account").create({ Name : 'My Account #1' }, function(err, ret) {
+                if (err || !ret.success) { return console.error(err, ret); }
+                console.log("Created record id : " + ret.id);
+            });
+        }
     });
 
     //
