@@ -6,7 +6,7 @@ $(document).ready(function() {
 	$('.ui.search.what')
 	  .search({
 	    apiSettings: {
-	      url: 'http://www.yellowpages.ca/search/tools/ac/what/{query}'
+	      url: 'www.yellowpages.ca/search/tools/ac/what/{query}'
 	    },
 	    fields: {
 	      results : 'suggestedValues',
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	$('.ui.search.where')
 	  .search({
 	    apiSettings: {
-	      url: 'http://www.yellowpages.ca/search/tools/ac/where/{query}'
+	      url: 'www.yellowpages.ca/search/tools/ac/where/{query}'
 	    },
 	    fields: {
 	      results : 'suggestedValues',

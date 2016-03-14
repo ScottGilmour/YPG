@@ -4,6 +4,7 @@ var User = require('../app/models/user');
 var moment = require('moment');
 var jsforce = require('jsforce');
 var request = require('request');
+var cheerio = require('cheerio');
 
 var oauth2 = new jsforce.OAuth2({
     // you can change loginUrl to connect to sandbox or prerelease env.
