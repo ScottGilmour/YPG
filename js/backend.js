@@ -50,6 +50,9 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
+app.get('*', function(req, res, next) {
+    res.redirect("https://" + req.headers.host + "/" + req.path);
+});
 
 
 server = https.createServer(https_options, app).listen(port, host);
