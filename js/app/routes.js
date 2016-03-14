@@ -48,7 +48,7 @@ module.exports = function(app, passport) {
         }
 
 
-        var conn = new sf.Connection({ oauth2 : oauth2 });
+        var conn = new jsforce.Connection({ oauth2 : oauth2 });
         var code = req.param('code');
         conn.authorize(code, function(err, userInfo) {
         if (err) { return console.error(err); }
@@ -69,7 +69,7 @@ module.exports = function(app, passport) {
     // Get authz url and redirect to it.
     //
     app.get('/oauth2/auth', function(req, res) {
-        res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
+        res.redirect(oauth2.getAuthorizationUrl());
     });
 
     app.post('/delete_contact', isLoggedIn, function(req, res) {
@@ -107,6 +107,84 @@ module.exports = function(app, passport) {
         }
 
         res.sendStatus(200);
+    });
+
+    app.get('/scrape', function(req, res) {
+        var keyword = req.query.keyword;
+        var location = req.query.location;
+        var page = req.query.page;
+
+        console.log(keyword + ', ' + location + ', ' + page);
+
+        if (!keyword || !location || !page) {
+            res.send('No keyword or location');
+            return;
+        }
+
+        url = 'http://www.yellowpages.ca/search/si/' + page + '/' + keyword + '/' + location;
+
+        var json = {};
+
+        request(url, function(error, response, html) {
+            console.log('Making request...');
+
+            if(!error) {
+                console.log('Scraping...');
+                var $ = cheerio.load(html);
+                
+                json = [];
+                
+                console.log('Found ' + $('.listing').length + ' results');
+
+
+                if ($('.listing').length == 0) {
+                    json.error = 'No results found';
+                } else {
+                    //For every listing
+                    $('.resultList .listing').each(function(index) {
+                        var json_obj = {};
+
+                        json_obj.title = $(this).find('.listing__content .listing__content__wrap .listing__right > h3 > a').html();
+
+                        $(this).find('.listing__address--full > span').each(function(index, el) {
+                            if ($(this).prop('itemprop') == 'postalCode') {
+                                json_obj.postal = $(this).html();
+                                if (!json_obj.postal) json_obj.postal = '';
+                            } else if ($(this).prop('itemprop') == 'addressRegion') {
+                                json_obj.region = $(this).html();
+                                if (!json_obj.region) json_obj.region = '';
+                            } else if ($(this).prop('itemprop') == 'streetAddress') {
+                                json_obj.addr = $(this).html();
+                                if (!json_obj.addr) json_obj.addr = '';
+                            } else if ($(this).prop('itemprop') == 'addressLocality') {
+                                json_obj.city = $(this).html();
+                                if (!json_obj.city) json_obj.city = '';
+                            }
+                        });
+
+                        json_obj.phone = $(this).find('.mlr__submenu__item > h4').html();
+                        json_obj.website = $(this).find('.mlr__item--website > a').attr('href');
+
+                        if (json_obj.website) {
+                            json_obj.website = json_obj.website.substring(7);
+                        } 
+
+                        if (!json_obj.title) json_obj.title = ' ';
+                        if (!json_obj.addr) json_obj.addr = ' ';
+                        if (!json_obj.city) json_obj.city = ' ';
+                        if (!json_obj.region) json_obj.region = ' ';
+                        if (!json_obj.postal) json_obj.postal = ' ';
+                        if (!json_obj.phone) json_obj.phone = ' ';
+                        if (!json_obj.website) json_obj.website = ' ';
+                        
+
+                        json.push(json_obj);
+
+                    }); 
+                }  
+                res.send(json);
+            }
+        })
     });
 
     app.get('/fetch_contacts', isLoggedIn, function(req, res) {
