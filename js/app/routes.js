@@ -99,6 +99,11 @@ module.exports = function(app, passport) {
                 if (err || !ret.success) { return console.error(err, ret); }
                 console.log("Created record id : " + ret.id);
             });
+
+            res.sendStatus(200);
+        } else {
+            console.log('No user found');
+            res.sendStatus(304);
         }
     });
 

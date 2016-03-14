@@ -187,4 +187,21 @@ $(document).ready(function() {
 		} 
 	});
 
+	$('#sfBtn').click(function(ev) {
+		$.ajax({
+			url: '/sf/create_lead',
+			type: 'post'
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+	});
+
 });
