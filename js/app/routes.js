@@ -3,12 +3,13 @@ var Contact = require('../app/models/contact');
 var User = require('../app/models/user');
 var moment = require('moment');
 var jsforce = require('jsforce');
+var request = require('request');
 
 var oauth2 = new jsforce.OAuth2({
     // you can change loginUrl to connect to sandbox or prerelease env.
     // loginUrl : 'https://test.salesforce.com',
-    clientId : '3MVG9zeKbAVObYjPfbOmOwbeRd2rWjKeMGFiCvIn__L.BC91QxzNwU5vMaliux_DHUaG0X4U7b13q14k9jguX',
-    clientSecret : '5889250564520434839',
+    clientId : '3MVG9uudbyLbNPZMWNKrkgrrySZogYGZv2V1JneS1.2Y01kADEsXZqPx4gT_OjdumPTJxMDjZcaZfatiYW8nF',
+    clientSecret : '406328354480100196',
     redirectUri : 'https://104.196.23.57/oauth_callback'
 });
 
@@ -39,6 +40,14 @@ module.exports = function(app, passport) {
     });
 
     app.get('/oauth_callback', function(req, res) {
+        var error_msg = req.query.error;
+        var error_desc = req.query.error_description;
+
+        if (error_msg) {
+
+        }
+
+
         var conn = new sf.Connection({ oauth2 : oauth2 });
         var code = req.param('code');
         conn.authorize(code, function(err, userInfo) {
@@ -73,6 +82,31 @@ module.exports = function(app, passport) {
                 res.send('success');
             });
         }
+    });
+
+    app.get('/crawl', isLoggedIn, function(req, res) {
+        //Take in a website url
+        var url = req.query.url;
+
+        if (url) {
+            //Request page html
+            request(url, function(error, response, html) {
+                if (!error) {
+                    
+                    var e_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/;
+
+                    var results = html.match(e_regex);
+
+                    console.log(results);
+
+                    //regex email addresses into array and return
+                } else {
+                    console.log(error);
+                }
+            });
+        }
+
+        res.sendStatus(200);
     });
 
     app.get('/fetch_contacts', isLoggedIn, function(req, res) {
