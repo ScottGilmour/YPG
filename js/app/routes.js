@@ -86,7 +86,14 @@ module.exports = function(app, passport) {
     app.post('/sf/create_lead', isLoggedIn, function(req, res) {
         var user = req.user;
 
-        if (user) {
+        if (user && user.salesforce.active) {
+
+            //Create conn
+            var conn = new jsforce.Connection({
+                instanceUrl : user.salesforce.conn.instance_url,
+                accessToken : user.salesforce.conn.access_token
+            });
+
             // Single record creation
             conn.sobject("Account").create({ Name : 'My Account #1' }, function(err, ret) {
                 if (err || !ret.success) { return console.error(err, ret); }
