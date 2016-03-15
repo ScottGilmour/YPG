@@ -129,7 +129,6 @@ module.exports = function(app, passport) {
 
             // Single record creation
             conn.sobject("Lead").create({ 
-                CreatedDate: new Date(),
                 Title: lead.title,
                 Company: lead.title,
                 Website: lead.website,
@@ -148,7 +147,7 @@ module.exports = function(app, passport) {
                         res.redirect('oauth2/auth');
                     }
 
-                    return console.error(err, ret); 
+                    console.error(err, ret); 
                 }
                 console.log("Created record id : " + ret.id);
             });
