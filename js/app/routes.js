@@ -106,7 +106,7 @@ module.exports = function(app, passport) {
 
             console.log(user.salesforce);
 
-            
+
 
             //created at date - CreatedDate
             //NumberOfEmployees
@@ -145,9 +145,9 @@ module.exports = function(app, passport) {
                 if (err || !ret.success) { 
                     if (err.errorCode == 'INVALID_SESSION_ID') {
                         console.log('sess id');
+                        res.redirect('oauth2/auth');
                     }
 
-                    res.send(err);
                     return console.error(err, ret); 
                 }
                 console.log("Created record id : " + ret.id);
