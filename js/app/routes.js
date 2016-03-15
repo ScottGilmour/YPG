@@ -31,6 +31,11 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/settings', isLoggedIn, function(req, res) {
+        res.render('settings.ejs', {
+            user : req.user
+        });
+    });
 
     app.get('/contacts', isLoggedIn, function(req, res) {
 
@@ -461,6 +466,29 @@ module.exports = function(app, passport) {
 
       // Do something with event_json
       console.log(event_json);
+    });
+    
+    app.post('/delete_subscription', isLoggedIn, function(req, res) {
+        var user = req.user;
+
+        if (!user) {
+            res.redirect('/login');
+        } else if (user.local.subscription.subscriptions.data) {
+            stripe.customers.cancelSubscription(
+              user.local.subscription.id,
+              user.local.subscription.subscriptions.data[0].id,
+              function(err, confirmation) {
+                // asynchronously called
+                if (err)
+                    throw err;
+
+                res.send('Confirmed');
+                res.redirect('/');
+              }
+            );
+        } else {
+            res.send('No subscription found');
+        }
     });
 
     app.post('/create_subscription', isLoggedIn, function(req, res) {
