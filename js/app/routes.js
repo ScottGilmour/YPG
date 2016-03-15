@@ -157,7 +157,7 @@ module.exports = function(app, passport) {
     // Get authz url and redirect to it.
     //
     app.get('/oauth2/auth', function(req, res) {
-        res.redirect(oauth2.getAuthorizationUrl({ scope : 'full' }));
+        res.redirect(oauth2.getAuthorizationUrl({ scope : 'full refreshToken' }));
     });
 
     app.post('/delete_contact', isLoggedIn, function(req, res) {
