@@ -89,7 +89,7 @@ module.exports = function(app, passport) {
         });
 
         res.sendStatus(200);
-        res.redirect('/settings');
+        res.redirect('/scraper');
     });
     
     app.post('/sf/create_lead', isLoggedIn, function(req, res) {
@@ -141,18 +141,15 @@ module.exports = function(app, passport) {
             }, function(err, ret) {
                 if (err || !ret.success) { 
                     if (err.errorCode == 'INVALID_SESSION_ID') {
-                        console.log('sess id');
                         res.redirect(oauth2.getAuthorizationUrl());
                     }
                     console.error(err, ret); 
-                    res.sendStatus(400);
+                    res.send(err.errorCode);
                 }
-                console.log("Created record id : " + ret.id);
-                res.sendStatus(200);
+                res.send(ret.id);
             });
         } else {
-            console.log('No user found');
-            res.sendStatus(400);
+            res.send('ERR: No user found');
         }
     });
 
@@ -160,7 +157,7 @@ module.exports = function(app, passport) {
     // Get authz url and redirect to it.
     //
     app.get('/oauth2/auth', function(req, res) {
-        res.redirect(oauth2.getAuthorizationUrl());
+        res.redirect(oauth2.getAuthorizationUrl({ scope : 'api id web' }));
     });
 
     app.post('/delete_contact', isLoggedIn, function(req, res) {
