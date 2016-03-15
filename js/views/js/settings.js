@@ -23,20 +23,6 @@ $(document).ready(function() {
 	$('.menu .item').tab();
 
 	$('#unsubscribe').click(function(ev) {
-		$.ajax({
-			url: '/delete_subscription',
-			type: 'post'
-		})
-		.done(function(rs) {
-			console.log("success");
-			alert(rs);
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
-		
+		window.location.replace("/oauth2/auth");
 	});
 });
