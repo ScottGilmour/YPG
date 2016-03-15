@@ -209,7 +209,6 @@ $(document).ready(function() {
         //Country
 
         var new_lead = {
-        	CreatedDate: new Date(),
         	Title: lead.title,
         	Company: lead.title,
         	Website: lead.website,

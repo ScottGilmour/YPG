@@ -104,8 +104,6 @@ module.exports = function(app, passport) {
                 accessToken : user.salesforce.conn.access_token
             });
 
-            console.log(user.salesforce);
-
 
 
             //created at date - CreatedDate
@@ -129,17 +127,17 @@ module.exports = function(app, passport) {
 
             // Single record creation
             conn.sobject("Lead").create({ 
-                Title: lead.title,
-                Company: lead.title,
-                Website: lead.website,
-                Phone: lead.phone,
-                Street: lead.addr,
-                City: lead.city,
-                LeadSource: 'Web',
-                Country: 'Canada',
-                PostalCode: lead.postal,
-                State: lead.region,
-                LastName: 'N/A'
+                Title: lead.Title,
+                Company: lead.Company,
+                Website: lead.Website,
+                Phone: lead.Phone,
+                Street: lead.Street,
+                City: lead.City,
+                LeadSource: lead.LeadSource,
+                Country: lead.Country,
+                PostalCode: lead.PostalCode,
+                State: lead.State,
+                LastName: lead.LastName
             }, function(err, ret) {
                 if (err || !ret.success) { 
                     if (err.errorCode == 'INVALID_SESSION_ID') {
