@@ -142,18 +142,17 @@ module.exports = function(app, passport) {
                 if (err || !ret.success) { 
                     if (err.errorCode == 'INVALID_SESSION_ID') {
                         console.log('sess id');
-                        res.redirect('oauth2/auth');
+                        res.redirect(oauth2.getAuthorizationUrl());
                     }
-
                     console.error(err, ret); 
+                    res.sendStatus(400);
                 }
                 console.log("Created record id : " + ret.id);
+                res.sendStatus(200);
             });
-
-            res.sendStatus(200);
         } else {
             console.log('No user found');
-            res.sendStatus(304);
+            res.sendStatus(400);
         }
     });
 

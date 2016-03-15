@@ -219,7 +219,7 @@ $(document).ready(function() {
         	Country: 'Canada',
         	PostalCode: lead.postal,
         	State: lead.region,
-        	LastName: 'N/A'
+        	LastName: lead.title
         };
 
         $.ajax({
@@ -230,13 +230,10 @@ $(document).ready(function() {
 			}
 		})
 		.done(function(rs) {
-			console.log("success");
+			alertify.success("Created new Salesforce lead");
 		})
 		.fail(function(rs) {
-			console.log("error " + rs);
-		})
-		.always(function() {
-			console.log("complete");
+			alertify.error("Error adding Salesforce lead: " + rs);
 		});
 	}
 });
