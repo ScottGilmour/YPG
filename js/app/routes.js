@@ -9,8 +9,8 @@ var cheerio = require('cheerio');
 var oauth2 = new jsforce.OAuth2({
     // you can change loginUrl to connect to sandbox or prerelease env.
     // loginUrl : 'https://test.salesforce.com',
-    clientId : '3MVG9uudbyLbNPZN.UL.mDZeCNM6SGtoQd0beetjggy3m2rLZzIqfe61swfnGlda2gXVbbWLm5AwcNRtwOmbJ',
-    clientSecret : '6379592389978281677',
+    clientId : '3MVG9uudbyLbNPZN.UL.mDZeCNIMVdjlGauIHb_9IqtxIpXj7mrGQ1v7Wk3diWFhTYfSpVm0vfwltZikP3y58',
+    clientSecret : '5114707190587120721',
     redirectUri : 'https://104.196.23.57/oauth_callback'
 });
 
@@ -59,6 +59,8 @@ module.exports = function(app, passport) {
         var code = req.query.code;
 
         console.log(code);
+
+
 
         conn.authorize(code, function(err, userInfo) {
         if (err) { return console.error(err); }
@@ -157,7 +159,21 @@ module.exports = function(app, passport) {
     // Get authz url and redirect to it.
     //
     app.get('/oauth2/auth', function(req, res) {
-        res.redirect(oauth2.getAuthorizationUrl({ scope : 'refresh_token' }));
+        res.redirect(oauth2.getAuthorizationUrl());
+    });
+
+    //
+    // Get authz url and redirect to it.
+    //
+    app.get('/oauth2/auth2', function(req, res) {
+        res.redirect(oauth2.getAuthorizationUrl({scope: 'full refresh_token'}));
+    });
+
+    //
+    // Get authz url and redirect to it.
+    //
+    app.get('/oauth2/auth3', function(req, res) {
+        res.redirect(oauth2.getAuthorizationUrl({scope: 'refresh_token'}));
     });
 
     app.post('/delete_contact', isLoggedIn, function(req, res) {
