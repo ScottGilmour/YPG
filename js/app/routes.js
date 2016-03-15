@@ -103,7 +103,8 @@ module.exports = function(app, passport) {
             //Create conn
             var conn = new jsforce.Connection({
                 instanceUrl : user.salesforce.conn.instance_url,
-                accessToken : user.salesforce.conn.access_token
+                accessToken : user.salesforce.conn.access_token,
+                refreshToken: user.salesforce.conn.refresh_token
             });
 
 
@@ -142,9 +143,6 @@ module.exports = function(app, passport) {
                 LastName: lead.LastName
             }, function(err, ret) {
                 if (err || !ret.success) { 
-                    if (err.errorCode == 'INVALID_SESSION_ID') {
-                        res.redirect(oauth2.getAuthorizationUrl());
-                    }
                     console.error(err, ret); 
                     res.send(err.errorCode);
                 }
@@ -160,20 +158,6 @@ module.exports = function(app, passport) {
     //
     app.get('/oauth2/auth', function(req, res) {
         res.redirect(oauth2.getAuthorizationUrl());
-    });
-
-    //
-    // Get authz url and redirect to it.
-    //
-    app.get('/oauth2/auth2', function(req, res) {
-        res.redirect(oauth2.getAuthorizationUrl({scope: 'full refresh_token'}));
-    });
-
-    //
-    // Get authz url and redirect to it.
-    //
-    app.get('/oauth2/auth3', function(req, res) {
-        res.redirect(oauth2.getAuthorizationUrl({scope: 'refresh_token'}));
     });
 
     app.post('/delete_contact', isLoggedIn, function(req, res) {
