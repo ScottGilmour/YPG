@@ -102,6 +102,11 @@ module.exports = function(app, passport) {
 
             //Create conn
             var conn = new jsforce.Connection({
+                oauth2 : {
+                    clientId : '3MVG9uudbyLbNPZN.UL.mDZeCNIMVdjlGauIHb_9IqtxIpXj7mrGQ1v7Wk3diWFhTYfSpVm0vfwltZikP3y58',
+                    clientSecret : '5114707190587120721',
+                    redirectUri : 'https://104.196.23.57/oauth_callback'
+                },
                 instanceUrl : user.salesforce.conn.instance_url,
                 accessToken : user.salesforce.conn.access_token,
                 refreshToken: user.salesforce.conn.refresh_token
