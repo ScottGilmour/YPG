@@ -38,9 +38,9 @@
       </div>
       <div class="ui bottom attached tab segment active" data-tab="first">
         <% if (!user.salesforce.active) { %>
-        <button id="salesforceAuth" class="ui basic button">
+        <button class="ui basic button">
           <i class="icon world"></i>
-          Authorize Salesforce
+            <a href="/oauth2/auth">Authorize Salesforce</a>
         </button>
       <% } else { %>
 

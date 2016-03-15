@@ -21,8 +21,4 @@ $(document).ready(function() {
 	$('#localeDropdown').dropdown();
 
 	$('.menu .item').tab();
-
-	$('#unsubscribe').click(function(ev) {
-		window.location.replace("/oauth2/auth");
-	});
 });

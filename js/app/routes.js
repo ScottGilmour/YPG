@@ -89,6 +89,7 @@ module.exports = function(app, passport) {
         });
 
         res.sendStatus(200);
+        res.redirect('/settings');
     });
     
     app.post('/sf/create_lead', isLoggedIn, function(req, res) {
