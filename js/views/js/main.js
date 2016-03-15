@@ -230,6 +230,7 @@ $(document).ready(function() {
 			}
 		})
 		.done(function(rs) {
+			alertify.logPosition("bottom right");
 			alertify.success("Created new Salesforce lead");
 		})
 		.fail(function(rs) {
