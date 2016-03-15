@@ -230,11 +230,11 @@ $(document).ready(function() {
 				lead: new_lead
 			}
 		})
-		.done(function() {
+		.done(function(rs) {
 			console.log("success");
 		})
-		.fail(function() {
-			console.log("error");
+		.fail(function(rs) {
+			console.log("error " + rs);
 		})
 		.always(function() {
 			console.log("complete");

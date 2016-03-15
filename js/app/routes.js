@@ -104,6 +104,10 @@ module.exports = function(app, passport) {
                 accessToken : user.salesforce.conn.access_token
             });
 
+            console.log(user.salesforce);
+
+            
+
             //created at date - CreatedDate
             //NumberOfEmployees
             //AnnualRevenue
@@ -138,7 +142,14 @@ module.exports = function(app, passport) {
                 State: lead.region,
                 LastName: 'N/A'
             }, function(err, ret) {
-                if (err || !ret.success) { return console.error(err, ret); }
+                if (err || !ret.success) { 
+                    if (err.errorCode == 'INVALID_SESSION_ID') {
+                        console.log('sess id');
+                    }
+
+                    res.send(err);
+                    return console.error(err, ret); 
+                }
                 console.log("Created record id : " + ret.id);
             });
 
