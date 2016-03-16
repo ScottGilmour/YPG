@@ -140,12 +140,13 @@ $(document).ready(function() {
 			html += '<td>' + rs[i].phone + '</td>';
 			html += '<td>' + rs[i].email + '</td>';
 			
-			html += '<td><a id="website_url" href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
+			html += '<td><a class="website_url" href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
 
 			html += '</tr>';
 
 			//Append new table row
 			$('#tbody').append(html);
+			pullEmail(rs[i].website, i);
 		}
 	}
 
@@ -191,8 +192,24 @@ $(document).ready(function() {
 		} 
 	});
 
-	function pullEmails() {
+	function pullEmail(website_url, target) {
 
+		$.ajax({
+			url: '/crawl',
+			type: 'get',
+			data: {url: website_url},
+		})
+		.done(function(rs) {
+			console.log(rs);
+			console.log(target);
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
 	}
 
 	function saveLeadToSF(lead) {
