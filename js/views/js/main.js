@@ -130,7 +130,12 @@ $(document).ready(function() {
 			//Append new table row
 			var html = '<tr id="result_row_' + i + '">';
 
-			html += '<td>' + '<a class="save_row" id="'+i+'"> <i class="large save icon"></i> </a>  <a class="delete_row"><i class="large trash icon"></i></a> ' + '</td>';
+			html += '<td>' + 
+			'<td class="collapsing">
+		        <div class="ui fitted slider checkbox">
+		          <input type="checkbox"> <label></label>
+		        </div>
+		      </td>' + '</td>';
 
 			html += '<td>' + rs[i].title + '</td>';
 			html += '<td>' + rs[i].addr + '</td>';
@@ -141,7 +146,7 @@ $(document).ready(function() {
 			
 			html += '<td><a class="website_url" href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
 
-			html += '</tr><tr><td></td></tr>';
+			html += '</tr>';
 
 			//Append new table row
 			$('#tbody').append(html);
