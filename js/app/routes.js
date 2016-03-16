@@ -188,7 +188,9 @@ module.exports = function(app, passport) {
 
                     var results = html.match(e_regex);
 
-                    console.log(results);
+                    if (results) {
+                        console.log(results[0]);
+                    }
 
                     //regex email addresses into array and return
                 } else {
