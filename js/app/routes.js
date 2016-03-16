@@ -521,7 +521,9 @@ module.exports = function(app, passport) {
 
               if (err) {
                 res.send(err);
-              }
+              } 
+
+              console.log(customer);
 
               //Set customer object to user model
               user.local.subscription = customer;
