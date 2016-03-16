@@ -190,6 +190,7 @@ module.exports = function(app, passport) {
 
                     if (results) {
                         console.log(results[0]);
+                        return results[0];
                     }
 
                     //regex email addresses into array and return
@@ -260,7 +261,7 @@ module.exports = function(app, passport) {
                             json_obj.website = json_obj.website.substring(7);
 
                             //Crawl for email
-                            crawlURLForEmail(json_obj.website);
+                            json_obj.email = crawlURLForEmail(json_obj.website);
                         } 
 
                         if (!json_obj.title) json_obj.title = ' ';

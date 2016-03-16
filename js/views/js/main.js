@@ -138,6 +138,7 @@ $(document).ready(function() {
 			html += '<td>' + rs[i].region + '</td>';
 			html += '<td>' + rs[i].postal + '</td>';
 			html += '<td>' + rs[i].phone + '</td>';
+			html += '<td>' + rs[i].email + '</td>';
 			
 			html += '<td><a href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
 
