@@ -138,15 +138,13 @@ $(document).ready(function() {
 			html += '<td>' + rs[i].region + '</td>';
 			html += '<td>' + rs[i].postal + '</td>';
 			html += '<td>' + rs[i].phone + '</td>';
-			html += '<td>' + rs[i].email + '</td>';
 			
 			html += '<td><a class="website_url" href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
 
-			html += '</tr>';
+			html += '</tr><tr><td></td></tr>';
 
 			//Append new table row
 			$('#tbody').append(html);
-			pullEmail(rs[i].website, i);
 		}
 	}
 
@@ -193,6 +191,10 @@ $(document).ready(function() {
 	});
 
 	function pullEmail(website_url, target) {
+
+		if (website_url.length > 10) {
+
+		}
 
 		$.ajax({
 			url: '/crawl',
