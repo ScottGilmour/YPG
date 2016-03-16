@@ -259,8 +259,22 @@ module.exports = function(app, passport) {
                         if (json_obj.website) {
                             json_obj.website = json_obj.website.substring(7);
 
-                            //Crawl for email
-                            json_obj.email = crawlURLForEmail(json_obj.website);
+                            request(url, function(error, response, html) {
+                                if (!error) {
+                                    
+                                    var e_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/;
+
+                                    var results = html.match(e_regex);
+
+                                    if (results) {
+                                        json_obj.email = results[0];
+                                    }
+
+                                    //regex email addresses into array and return
+                                } else {
+                                    console.log(error);
+                                }
+                            });
                             console.log(json_obj.email);
                         } 
 
