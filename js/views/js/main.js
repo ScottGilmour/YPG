@@ -130,12 +130,11 @@ $(document).ready(function() {
 			//Append new table row
 			var html = '<tr id="result_row_' + i + '">';
 
-			html += '<td>' + 
-			'<td class="collapsing">' +
-		        '<div class="ui fitted slider checkbox">' +
-		          '<input type="checkbox"> <label></label>' +
-		        '</div>' +
-		      '</td>' + '</td>';
+			html += '<td class="collapsing">' +
+				        '<div class="ui fitted slider checkbox">' +
+				          '<input type="checkbox"> <label></label>' +
+				        '</div>' +
+				      '</td>';
 
 			html += '<td>' + rs[i].title + '</td>';
 			html += '<td>' + rs[i].addr + '</td>';
