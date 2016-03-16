@@ -189,7 +189,6 @@ module.exports = function(app, passport) {
                     var results = html.match(e_regex);
 
                     if (results) {
-                        console.log(results[0]);
                         return results[0];
                     }
 
@@ -262,6 +261,7 @@ module.exports = function(app, passport) {
 
                             //Crawl for email
                             json_obj.email = crawlURLForEmail(json_obj.website);
+                            console.log(json_obj.email);
                         } 
 
                         if (!json_obj.title) json_obj.title = ' ';
@@ -271,6 +271,7 @@ module.exports = function(app, passport) {
                         if (!json_obj.postal) json_obj.postal = ' ';
                         if (!json_obj.phone) json_obj.phone = ' ';
                         if (!json_obj.website) json_obj.website = ' ';
+                        if (!json_obj.email) json_obj.email = ' ';
                         
 
                         json.push(json_obj);
