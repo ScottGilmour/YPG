@@ -485,7 +485,7 @@ module.exports = function(app, passport) {
 
         if (!user) {
             res.redirect('/login');
-        } else if (user.local.subscription.subscriptions.data) {
+        } else if (user.local.subscription) {
             stripe.customers.cancelSubscription(
               user.local.subscription.id,
               user.local.subscription.subscriptions.data[0].id,
@@ -508,7 +508,7 @@ module.exports = function(app, passport) {
         var stripeToken = req.body.stripeToken;
 
         if (!user) {
-            res.redirect('/');
+            res.redirect('/login');
         } else {
 
             //Create the customer

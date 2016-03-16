@@ -14,6 +14,7 @@ var userSchema = mongoose.Schema({
         member       : Boolean,
         locale       : String,
         active_until : Date,
+        credits      : Number,
         subscription : mongoose.Schema.Types.Mixed
     },
     facebook         : {
