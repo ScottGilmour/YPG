@@ -177,7 +177,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.get('/crawl', isLoggedIn, function(req, res) {
+    function crawlURLForEmail(url) {
         //Take in a website url
         var url = req.query.url;
 
@@ -198,9 +198,7 @@ module.exports = function(app, passport) {
                 }
             });
         }
-
-        res.sendStatus(200);
-    });
+    }
 
     app.get('/scrape', function(req, res) {
         var keyword = req.query.keyword;
@@ -260,6 +258,9 @@ module.exports = function(app, passport) {
 
                         if (json_obj.website) {
                             json_obj.website = json_obj.website.substring(7);
+
+                            //Crawl for email
+                            crawlURLForEmail(json_obj.website);
                         } 
 
                         if (!json_obj.title) json_obj.title = ' ';
@@ -495,11 +496,12 @@ module.exports = function(app, passport) {
                     throw err;
 
                 res.send('Confirmed');
-                res.redirect('/');
+                res.sendStatus(200);
               }
             );
         } else {
             res.send('No subscription found');
+            res.sendStatus(403);
         }
     });
 
