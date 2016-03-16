@@ -177,7 +177,9 @@ module.exports = function(app, passport) {
         }
     });
 
-    function crawlURLForEmail(url) {
+    app.get('/crawl', isLoggedIn, function(req, res) {
+        var url = req.query.url;
+
         //Take in a website url
         if (url) {
             //Request page html
@@ -189,7 +191,9 @@ module.exports = function(app, passport) {
                     var results = html.match(e_regex);
 
                     if (results) {
-                        return results[0];
+                        res.send(results[0]);
+                    } else {
+                        res.send('No emails found');
                     }
 
                     //regex email addresses into array and return
@@ -197,8 +201,10 @@ module.exports = function(app, passport) {
                     console.log(error);
                 }
             });
+        } else {
+            res.sendStatus(403);
         }
-    }
+    });
 
     app.get('/scrape', function(req, res) {
         var keyword = req.query.keyword;
@@ -258,24 +264,6 @@ module.exports = function(app, passport) {
 
                         if (json_obj.website) {
                             json_obj.website = json_obj.website.substring(7);
-
-                            request(url, function(error, response, html) {
-                                if (!error) {
-                                    
-                                    var e_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/;
-
-                                    var results = html.match(e_regex);
-
-                                    if (results) {
-                                        json_obj.email = results[0];
-                                    }
-
-                                    //regex email addresses into array and return
-                                } else {
-                                    console.log(error);
-                                }
-                            });
-                            console.log(json_obj.email);
                         } 
 
                         if (!json_obj.title) json_obj.title = ' ';

@@ -140,7 +140,7 @@ $(document).ready(function() {
 			html += '<td>' + rs[i].phone + '</td>';
 			html += '<td>' + rs[i].email + '</td>';
 			
-			html += '<td><a href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
+			html += '<td><a id="website_url" href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
 
 			html += '</tr>';
 
@@ -190,6 +190,10 @@ $(document).ready(function() {
 			fetchListings($('#searchinputwhat').val(), $('#searchinputwhere').val().replace(',', '+').replace(' ', ''), current_page);
 		} 
 	});
+
+	function pullEmails() {
+
+	}
 
 	function saveLeadToSF(lead) {
 		//created at date - CreatedDate
