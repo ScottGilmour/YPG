@@ -179,8 +179,6 @@ module.exports = function(app, passport) {
 
     function crawlURLForEmail(url) {
         //Take in a website url
-        var url = req.query.url;
-
         if (url) {
             //Request page html
             request(url, function(error, response, html) {
