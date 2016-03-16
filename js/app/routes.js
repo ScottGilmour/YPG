@@ -481,6 +481,8 @@ module.exports = function(app, passport) {
     app.post('/delete_subscription', isLoggedIn, function(req, res) {
         var user = req.user;
 
+        console.log(user);
+
         if (!user) {
             res.redirect('/login');
         } else if (user.local.subscription.subscriptions.data) {
