@@ -81,7 +81,67 @@ $(document).ready(function() {
 			});	
 	}
 
+
+
+	$('#saveBtn').click(function(ev) {
+		var contacts = [];
+
+
+		saveAllSelected('sf', contacts);
+	});
+
+	function saveAllSelected(target, contacts) {
+		if (target == 'sf') {
+			var leads = [];
+
+			for (var i = 0; i < contacts.length; i++) {
+				var new_lead = {
+		        	Title: contacts[i].title,
+		        	Company: contacts[i].title,
+		        	Website: contacts[i].website,
+		        	Phone: contacts[i].phone,
+		        	Street: contacts[i].addr,
+		        	City: contacts[i].city,
+		        	LeadSource: 'Web',
+		        	Country: 'Canada',
+		        	PostalCode: contacts[i].postal,
+		        	State: contacts[i].region,
+		        	LastName: contacts[i].title
+		        };
+
+		        leads.push(new_lead);
+			};
+
+			$.ajax({
+				url: '/sf/create_lead',
+				type: 'post',
+				data: {
+					lead: leads
+				}
+			})
+			.done(function(rs) {
+				alertify.logPosition("bottom right");
+				alertify.success("Created new Salesforce lead");
+			})
+			.fail(function(rs) {
+				alertify.error("Error adding Salesforce lead: " + rs);
+			});
+			
+		}
+	}
+
 	function setEventListeners() {
+		$('.result_list.checkbox').checkbox('attach events', '#selectAll', 'check');
+
+		$('.result_list.checkbox').checkbox({
+			onChecked: function() {
+				console.log('onChecked called');
+			},
+			onUnchecked: function() {
+				console.log('onUnchecked called');
+			}
+		});
+
 		$('.delete_row').click(function(ev) {
 			if (ev.currentTarget) {
 				$(this).parent().parent().detach();
@@ -119,8 +179,6 @@ $(document).ready(function() {
 				element.find('i').addClass('check');
 				element.off();
 			});
-			
-			saveLeadToSF(contentData);
 		});
 	}
 
@@ -131,7 +189,7 @@ $(document).ready(function() {
 			var html = '<tr id="result_row_' + i + '">';
 
 			html += '<td class="collapsing">' +
-				        '<div class="ui fitted slider checkbox">' +
+				        '<div class="ui fitted slider result_list checkbox">' +
 				          '<input type="checkbox"> <label></label>' +
 				        '</div>' +
 				      '</td>';
@@ -216,53 +274,5 @@ $(document).ready(function() {
 			console.log("complete");
 		});
 		
-	}
-
-	function saveLeadToSF(lead) {
-		//created at date - CreatedDate
-        //NumberOfEmployees
-        //AnnualRevenue
-        //firstName + LastName
-        //Industry
-        //Lead Source
-        //Title
-        //Company
-        //Website
-        //Email
-        //Phone
-        //Street
-        //City
-        //State/Province
-        //Postal
-        //Country
-
-        var new_lead = {
-        	Title: lead.title,
-        	Company: lead.title,
-        	Website: lead.website,
-        	Phone: lead.phone,
-        	Street: lead.addr,
-        	City: lead.city,
-        	LeadSource: 'Web',
-        	Country: 'Canada',
-        	PostalCode: lead.postal,
-        	State: lead.region,
-        	LastName: lead.title
-        };
-
-        $.ajax({
-			url: '/sf/create_lead',
-			type: 'post',
-			data: {
-				lead: new_lead
-			}
-		})
-		.done(function(rs) {
-			alertify.logPosition("bottom right");
-			alertify.success("Created new Salesforce lead");
-		})
-		.fail(function(rs) {
-			alertify.error("Error adding Salesforce lead: " + rs);
-		});
 	}
 });
