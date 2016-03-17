@@ -138,7 +138,10 @@ $(document).ready(function() {
 		$('.result_list.checkbox').checkbox({
 			onChecked: function() {
 				var id = $(this).prop('id');
-				selected_content.push(outside_content[i]);
+
+				if (outside_content[id]) {
+					selected_content.push(outside_content[id]);
+				}
 
 				if (selected_content.length > 0) { $('#saveBtn').removeClass('disabled'); }
 
@@ -146,7 +149,9 @@ $(document).ready(function() {
 			},
 			onUnchecked: function() {
 				var id = $(this).prop('id');
-				selected_content.pop(outside_content[i]);
+				if (outside_content[id]) {
+					selected_content.pop(outside_content[id]);
+				}
 
 				if (selected_content.length == 0) { $('#saveBtn').addClass('disabled'); }
 
