@@ -1,4 +1,5 @@
 var outside_content = [];
+var selected_content = [];
 $(document).ready(function() {
 	var content = [];
 	var field_count = 0;
@@ -88,10 +89,7 @@ $(document).ready(function() {
 
 
 	$('#saveBtn').click(function(ev) {
-		var contacts = [];
-
-
-		saveAllSelected('sf', contacts);
+		saveAllSelected('sf', selected_content);
 	});
 
 	function saveAllSelected(target, contacts) {
@@ -139,9 +137,19 @@ $(document).ready(function() {
 
 		$('.result_list.checkbox').checkbox({
 			onChecked: function() {
+				var id = $(this).prop('id');
+				selected_content.push(outside_content[i]);
+
+				if (selected_content.length > 0) { $('#saveBtn').removeClass('disabled'); }
+
 				console.log('onChecked called');
 			},
 			onUnchecked: function() {
+				var id = $(this).prop('id');
+				selected_content.pop(outside_content[i]);
+
+				if (selected_content.length == 0) { $('#saveBtn').addClass('disabled'); }
+
 				console.log('onUnchecked called');
 			}
 		});
@@ -194,7 +202,7 @@ $(document).ready(function() {
 
 			html += '<td class="collapsing">' +
 				        '<div class="ui fitted slider result_list checkbox">' +
-				          '<input type="checkbox"> <label></label>' +
+				          '<input id="' + i + '" type="checkbox"> <label></label>' +
 				        '</div>' +
 				      '</td>';
 

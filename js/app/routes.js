@@ -134,25 +134,16 @@ module.exports = function(app, passport) {
             console.log(lead);
 
             // Single record creation
-            conn.sobject("Lead").create({ 
-                Title: lead.Title,
-                Company: lead.Company,
-                Website: lead.Website,
-                Phone: lead.Phone,
-                Street: lead.Street,
-                City: lead.City,
-                LeadSource: lead.LeadSource,
-                Country: lead.Country,
-                PostalCode: lead.PostalCode,
-                State: lead.State,
-                LastName: lead.LastName
-            }, function(err, ret) {
-                if (err || !ret.success) { 
-                    console.error(err, ret); 
-                    res.send(err.errorCode);
-                }
-                res.send(ret.id);
-            });
+            conn.sobject("Lead").create(
+                lead, 
+                function(err, rets) {
+                    if (err) { return console.error(err); }
+                        for (var i=0; i < rets.length; i++) {
+                            if (rets[i].success) {
+                                console.log("Created record id : " + rets[i].id);
+                            }
+                        }
+                    });
         } else {
             res.send('ERR: No user found');
         }
