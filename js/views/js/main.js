@@ -1,7 +1,4 @@
-var this_obj = {
-	content = []
-}
-
+var outside_content = [];
 $(document).ready(function() {
 	var content = [];
 	var field_count = 0;
