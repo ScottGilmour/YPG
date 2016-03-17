@@ -1,5 +1,5 @@
 var this_obj = {
-	content = [];
+	content = []
 }
 
 $(document).ready(function() {
