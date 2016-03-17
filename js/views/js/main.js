@@ -63,6 +63,7 @@ $(document).ready(function() {
 
 					for (var i = 0; i < rs.length; i++) {
 						content.push(rs[i]);
+						outside_content.push(rs[i]);
 					};
 					//uniq_content = removeDuplicates(content);
 					buildTable(content);
