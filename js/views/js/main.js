@@ -66,7 +66,7 @@ $(document).ready(function() {
 						content.push(rs[i]);
 						outside_content.push(rs[i]);
 					};
-					//uniq_content = removeDuplicates(content);
+					content = removeDuplicates(content);
 					buildTable(content);
 					field_count += rs.length;
 					current_page = current_page + 1;
@@ -93,7 +93,9 @@ $(document).ready(function() {
 	});
 
 	function saveAllSelected(target, contacts) {
+		$('#saveBtn').addClass('disabled');
 		if (target == 'sf') {
+
 			var leads = [];
 
 			for (var i = 0; i < contacts.length; i++) {
@@ -114,6 +116,7 @@ $(document).ready(function() {
 		        leads.push(new_lead);
 			};
 
+
 			$.ajax({
 				url: '/sf/create_lead',
 				type: 'post',
@@ -124,6 +127,7 @@ $(document).ready(function() {
 			.done(function(rs) {
 				alertify.logPosition("bottom right");
 				alertify.success("Created new Salesforce lead");
+				$('#saveBtn').removeClass('disabled');
 			})
 			.fail(function(rs) {
 				alertify.error("Error adding Salesforce lead: " + rs);
@@ -134,6 +138,11 @@ $(document).ready(function() {
 
 	function setEventListeners() {
 		$('.result_list.checkbox').checkbox('attach events', '#selectAll', 'check');
+		$('.result_list.checkbox').checkbox('attach events', '#selectNone', 'uncheck');
+
+		$('#pullEmails').click(function(ev) {
+			pullEmails();
+		});
 
 		$('.result_list.checkbox').checkbox({
 			onChecked: function() {
@@ -157,45 +166,6 @@ $(document).ready(function() {
 
 				console.log('onUnchecked called');
 			}
-		});
-
-		$('.delete_row').click(function(ev) {
-			if (ev.currentTarget) {
-				$(this).parent().parent().detach();
-			}
-		});
-
-		$('.save_row').click(function(ev) {
-
-			var element = $(this);
-
-			element.find('i').removeClass('save');
-			element.parent().parent().dimmer('show');
-
-			if (this.id) {
-				var contentData = content[this.id];
-			}
-
-			$.ajax({
-				url: '/add_contact',
-				type: 'post',
-				data: {
-					contact : contentData
-				}
-			})
-			.done(function(rs) {
-				console.log(rs);
-				console.log("success");
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete");
-				element.parent().parent().dimmer('hide');
-				element.find('i').addClass('check');
-				element.off();
-			});
 		});
 	}
 
@@ -269,27 +239,28 @@ $(document).ready(function() {
 		} 
 	});
 
-	function pullEmail(website_url, target) {
+	function pullEmails() {
+		var website_urls = [];
 
-		if (website_url.length > 10) {
+		if (selected_content.length > 0) {
+			for (var i = 0; i < selected_content.length; i++) {
+				website_urls.push(selected_content[i].website);
+			};
 
+			$.ajax({
+				url: '/crawl',
+				type: 'get',
+				data: {urls: website_urls},
+			})
+			.done(function(rs) {
+				console.log(rs);
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
 		}
-
-		$.ajax({
-			url: '/crawl',
-			type: 'get',
-			data: {url: website_url},
-		})
-		.done(function(rs) {
-			console.log(rs);
-			console.log(target);
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
-		
 	}
 });

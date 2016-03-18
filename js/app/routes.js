@@ -14,6 +14,8 @@ var oauth2 = new jsforce.OAuth2({
     redirectUri : 'https://104.196.23.57/oauth_callback'
 });
 
+var email_list = [];
+
 module.exports = function(app, passport) {
 
     // =====================================
@@ -137,12 +139,13 @@ module.exports = function(app, passport) {
             conn.sobject("Lead").create(
                 lead, 
                 function(err, rets) {
-                    if (err) { return console.error(err); }
+                    if (err) { res.sendStatus(403); }
                         for (var i=0; i < rets.length; i++) {
                             if (rets[i].success) {
                                 console.log("Created record id : " + rets[i].id);
                             }
                         }
+                        res.sendStatus(200);
                     });
         } else {
             res.send('ERR: No user found');
@@ -168,30 +171,39 @@ module.exports = function(app, passport) {
         }
     });
 
+    app.get('/crawl_list', isLoggedIn, function(req, res) {
+        if (email_list.length > 0) {
+            res.send(email_list);
+        } else {
+            res.send('No emails found');
+        }
+    });
+
     app.get('/crawl', isLoggedIn, function(req, res) {
-        var url = req.query.url;
+        var urls = req.query.url;
 
         //Take in a website url
-        if (url) {
-            //Request page html
-            request(url, function(error, response, html) {
-                if (!error) {
-                    
-                    var e_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/;
+        if (urls) {
+            for (var i = 0; i < urls.length; i++) {
+                //Request page html
+                request(urls[i], function(error, response, html) {
+                    if (!error) {
+                        
+                        var e_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/;
 
-                    var results = html.match(e_regex);
+                        var results = html.match(e_regex);
 
-                    if (results) {
-                        res.send(results[0]);
+                        if (results) {
+                            email_list.push(results[0]);
+                        } 
                     } else {
-                        res.send('No emails found');
+                        console.log(error);
                     }
+                });
+            };
 
-                    //regex email addresses into array and return
-                } else {
-                    console.log(error);
-                }
-            });
+            res.sendStatus(200);
+            
         } else {
             res.sendStatus(403);
         }
@@ -264,7 +276,6 @@ module.exports = function(app, passport) {
                         if (!json_obj.postal) json_obj.postal = ' ';
                         if (!json_obj.phone) json_obj.phone = ' ';
                         if (!json_obj.website) json_obj.website = ' ';
-                        if (!json_obj.email) json_obj.email = ' ';
                         
 
                         json.push(json_obj);
