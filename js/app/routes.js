@@ -187,12 +187,13 @@ module.exports = function(app, passport) {
         //Take in a website url
         if (urls) {
             for (var i = 0; i < urls.length; i++) {
+                console.log(urls[i]);
+
                 //Request page html
                 request(urls[i], function(error, response, html) {
                     if (!error) {
-                        console.log(urls[i]);
 
-                        var e_regex = /[^\s@:/\\<>]+@[^\s@:/\\<>]+\.[^\s@:/\\<>]+/;
+                        var e_regex = /[^\s@:/\<>]+@[^\s@:/\<>]+\.[^\s@:/\<>]+/;
 
                         var results = html.match(e_regex);
 

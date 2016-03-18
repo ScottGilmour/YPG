@@ -139,8 +139,13 @@ $(document).ready(function() {
 	}
 
 	function setEventListeners() {
-		$('.result_list.checkbox').checkbox('attach events', '#selectAll', 'check');
-		$('.result_list.checkbox').checkbox('attach events', '#selectNone', 'uncheck');
+		$('#selectAll').click(function(ev) {
+			$('.result_list.checkbox').checkbox('check');
+		});
+
+		$('#selectNone').click(function(ev) {
+			$('.result_list.checkbox').checkbox('uncheck');
+		});
 
 		$('#pullEmails').click(function(ev) {
 			pullEmails();
@@ -155,8 +160,6 @@ $(document).ready(function() {
 				}
 
 				if (selected_content.length > 0) { $('#saveBtn').removeClass('disabled'); }
-
-				console.log('onChecked called');
 			},
 			onUnchecked: function() {
 				var id = $(this).prop('id');
@@ -165,8 +168,6 @@ $(document).ready(function() {
 				}
 
 				if (selected_content.length == 0) { $('#saveBtn').addClass('disabled'); }
-
-				console.log('onUnchecked called');
 			}
 		});
 	}
