@@ -45,8 +45,6 @@ $(document).ready(function() {
 	});
 
 	function fetchListings(query, loc, pg) {
-		field_count = 0;
-		$('#results').html(field_count);
 
 		$.ajax({
 				url: '/scrape',
@@ -177,7 +175,7 @@ $(document).ready(function() {
 	}
 
 	function buildTable(rs) {
-		for (var i = 0; i < max_results; i++) {
+		for (var i = 0; i < rs.length; i++) {
 
 			//Append new table row
 			var html = '<tr id="result_row_' + i + '">';
@@ -241,6 +239,7 @@ $(document).ready(function() {
 		if ($('#searchinputwhat').val() && $('#searchinputwhere').val() && $('.result.active').length == 0) {
 			$('#tbody').empty();
 			current_page = 0;
+			field_count = 0;
 
 			fetchListings($('#searchinputwhat').val(), $('#searchinputwhere').val().replace(',', '+').replace(' ', ''), current_page);
 		} 
