@@ -180,7 +180,7 @@ module.exports = function(app, passport) {
     });
 
     app.get('/crawl', isLoggedIn, function(req, res) {
-        var urls = req.query.url;
+        var urls = req.query.urls;
 
         //Take in a website url
         if (urls) {
