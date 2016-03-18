@@ -75,12 +75,9 @@ $(document).ready(function() {
 					field_count += rs.length;
 					current_page = current_page + 1;
 					$('#results').html(field_count);
-
-					if (current_page < 5 && field_count < 50) {
-						fetchListings(query, loc, current_page);
-					} else {
-						console.log('Max pages reached');
-					}
+					
+					fetchListings(query, loc, current_page);
+					
 				};
 			})
 			.fail(function() {

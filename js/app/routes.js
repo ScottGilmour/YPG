@@ -237,7 +237,7 @@ module.exports = function(app, passport) {
                 console.log('Found ' + $('.listing').length + ' results');
 
 
-                if ($('.listing').length == 0) {
+                if ($('.listing').length == 0 || page > 3) {
                     json.error = 'No results found';
                 } else {
                     //For every listing
