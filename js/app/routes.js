@@ -181,15 +181,23 @@ module.exports = function(app, passport) {
 
     app.post('/crawl', isLoggedIn, function(req, res) {
         var urls = req.body.urls;
+        var new_url_list = [];
 
-        console.log(urls);
+        for (var i = 0; i < urls.length; i++) {
+            if (new_url_list.indexOf(urls[i]) != -1) {
+                new_url_list.push(urls[i]);
+            }
+        }
+
+        console.log('Crawling ' + new_url_list.length + ' urls');
+
 
         //Take in a website url
-        if (urls) {
-            for (var i = 0; i < urls.length; i++) {
+        if (new_url_list) {
+            for (var i = 0; i < new_url_list.length; i++) {
 
                 //Request page html
-                request(urls[i], function(error, response, html) {
+                request(new_url_list[i], function(error, response, html) {
                     if (!error) {
 
                         var e_regex = /[^\s@:/"\\<>]+@[^\s@:/"\\<>]+\.[^\s@:/"\\<>]+/;
@@ -198,6 +206,7 @@ module.exports = function(app, passport) {
 
                         if (results) {
                             email_list.push(results[0]);
+                            console.log(results[0]);
                         } 
                     } else {
                         console.log(error);
