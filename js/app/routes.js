@@ -187,7 +187,6 @@ module.exports = function(app, passport) {
         //Take in a website url
         if (urls) {
             for (var i = 0; i < urls.length; i++) {
-                console.log(urls[i]);
 
                 //Request page html
                 request(urls[i], function(error, response, html) {
@@ -228,6 +227,7 @@ module.exports = function(app, passport) {
         url = 'http://www.yellowpages.ca/search/si/' + page + '/' + keyword + '/' + location;
 
         var json = {};
+        var phones = [];
 
         request(url, function(error, response, html) {
             console.log('Making request...');
@@ -278,12 +278,14 @@ module.exports = function(app, passport) {
                         if (!json_obj.city) json_obj.city = ' ';
                         if (!json_obj.region) json_obj.region = ' ';
                         if (!json_obj.postal) json_obj.postal = ' ';
-                        if (!json_obj.phone) json_obj.phone = ' ';
                         if (!json_obj.website) json_obj.website = ' ';
-                        
 
-                        json.push(json_obj);
-
+                        if (!json_obj.phone) {
+                            json_obj.phone = ' ';
+                        } else if (phones.indexOf(json_obj.phone) == -1) { 
+                            phones.push(json_obj.phone); 
+                            json.push(json_obj);
+                        }
                     }); 
                 }  
                 res.send(json);
