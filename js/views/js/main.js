@@ -242,9 +242,13 @@ $(document).ready(function() {
 	function pullEmails() {
 		var website_urls = [];
 
+		$('#pullEmails').addClass('disabled');
+
 		if (selected_content.length > 0) {
 			for (var i = 0; i < selected_content.length; i++) {
-				website_urls.push(selected_content[i].website);
+				if (selected_content[i].website.length > 10) {
+					website_urls.push(selected_content[i].website);
+				}
 			};
 
 			$.ajax({
@@ -254,6 +258,9 @@ $(document).ready(function() {
 			})
 			.done(function(rs) {
 				console.log(rs);
+				$('#pullEmails').removeClass('disabled');
+				alertify.logPosition("bottom right");
+				alertify.success("Added new emails to list");
 			})
 			.fail(function() {
 				console.log("error");

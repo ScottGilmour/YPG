@@ -189,7 +189,7 @@ module.exports = function(app, passport) {
                 request(urls[i], function(error, response, html) {
                     if (!error) {
                         
-                        var e_regex = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/;
+                        var e_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
                         var results = html.match(e_regex);
 
