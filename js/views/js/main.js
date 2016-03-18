@@ -73,7 +73,7 @@ $(document).ready(function() {
 					};
 					content = removeDuplicates(content);
 					buildTable(content);
-					field_count += rs.length;
+					field_count += content.length;
 					current_page = current_page + 1;
 					$('#results').html(field_count);
 					
@@ -212,7 +212,7 @@ $(document).ready(function() {
 			}
 		};
 
-	    return content;
+	    return new_content;
 	}
 
 
