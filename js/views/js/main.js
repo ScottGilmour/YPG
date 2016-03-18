@@ -203,31 +203,15 @@ $(document).ready(function() {
 
 	function removeDuplicates(content) {
 
-		var comparer = function compareObject(a, b) {
-	        if (a.title == b.title) {
-	        	if (a.phone == b.phone) {
-	        		return 0;
-	        	} else if (a.title > b.title) {
-	        		return 1;
-	        	} else {
-	        		return -1;
-	        	}
-	        } else {
-	            if (a.title < b.title) {
-	                return -1;
-	            } else {
-	                return 1;
-	            }
-	        }
-		}
+		var phones = [];
+		var new_content = [];
 
-		content.sort(comparer);
-
-		for (var i = 0; i < content.length - 1; ++i) {
-	        if (comparer(content[i], content[i+1]) === 0) {
-	            content.splice(i, 1);
-	        }
-	    }
+		for (var i = 0; i < content.length; i++) {
+			if (content[i].phone.length > 7 && phones.indexOf(content[i].phone) == -1) {
+				phones.push(content[i].phone);
+				new_content.push(content[i]);
+			}
+		};
 
 	    return content;
 	}
