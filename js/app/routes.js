@@ -192,7 +192,7 @@ module.exports = function(app, passport) {
                 request(urls[i], function(error, response, html) {
                     if (!error) {
 
-                        var e_regex = /[^\s@:/\<>]+@[^\s@:/\<>]+\.[^\s@:/\<>]+/;
+                        var e_regex = /[^\s@:/"\\<>]+@[^\s@:/"\\<>]+\.[^\s@:/"\\<>]+/;
 
                         var results = html.match(e_regex);
 
@@ -240,7 +240,7 @@ module.exports = function(app, passport) {
                 console.log('Found ' + $('.listing').length + ' results');
 
 
-                if ($('.listing').length == 0 || page > 3) {
+                if ($('.listing').length == 0 || page > 5) {
                     json.error = 'No results found';
                 } else {
                     //For every listing

@@ -2,8 +2,6 @@ var outside_content = [];
 var selected_content = [];
 var phones = [];
 
-var max_results = 100;
-
 $(document).ready(function() {
 	var content = [];
 	var field_count = 0;
@@ -218,15 +216,23 @@ $(document).ready(function() {
 
 	$('#searchBtn').click(function(ev) {
 		if ($('#searchinputwhat').val() && $('#searchinputwhere').val() && $('.result.active').length == 0) {
-			$('#tbody').empty();
-			current_page = 0;
-			field_count = 0;
-			phones = [];
-			$('.result_list.checkbox').off();
+			resetSearch();
 
 			fetchListings($('#searchinputwhat').val(), $('#searchinputwhere').val().replace(',', '+').replace(' ', ''), current_page);
 		} 
 	});
+
+	function resetSearch() {
+		current_page = 0;
+		field_count = 0;
+		phones = [];
+		$('#tbody').empty();
+		$('#results').html(field_count);
+		$('#pullEmails').off();
+		$('.result_list.checkbox').off();
+		$('#selectNone').off();
+		$('#selectAll').off();
+	}
 
 	function pullEmails() {
 		var website_urls = [];
