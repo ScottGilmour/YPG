@@ -180,7 +180,9 @@ module.exports = function(app, passport) {
     });
 
     app.post('/crawl', isLoggedIn, function(req, res) {
-        var urls = req.param.urls;
+        var urls = req.body.urls;
+
+        console.log(urls);
 
         //Take in a website url
         if (urls) {
@@ -189,7 +191,7 @@ module.exports = function(app, passport) {
                 request(urls[i], function(error, response, html) {
                     if (!error) {
                         console.log(urls[i]);
-                        
+
                         var e_regex = /[^\s@:/\\<>]+@[^\s@:/\\<>]+\.[^\s@:/\\<>]+/;
 
                         var results = html.match(e_regex);
