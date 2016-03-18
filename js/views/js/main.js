@@ -221,6 +221,8 @@ $(document).ready(function() {
 			$('#tbody').empty();
 			current_page = 0;
 			field_count = 0;
+			phones = [];
+			$('.result_list.checkbox').off();
 
 			fetchListings($('#searchinputwhat').val(), $('#searchinputwhere').val().replace(',', '+').replace(' ', ''), current_page);
 		} 
