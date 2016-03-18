@@ -1,5 +1,6 @@
 var outside_content = [];
 var selected_content = [];
+var phones = [];
 
 var max_results = 100;
 
@@ -202,8 +203,6 @@ $(document).ready(function() {
 
 
 	function removeDuplicates(content) {
-
-		var phones = [];
 		var new_content = [];
 
 		for (var i = 0; i < content.length; i++) {
