@@ -179,8 +179,8 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.get('/crawl', isLoggedIn, function(req, res) {
-        var urls = req.query.urls;
+    app.post('/crawl', isLoggedIn, function(req, res) {
+        var urls = req.param.urls;
 
         //Take in a website url
         if (urls) {
@@ -188,8 +188,9 @@ module.exports = function(app, passport) {
                 //Request page html
                 request(urls[i], function(error, response, html) {
                     if (!error) {
+                        console.log(urls[i]);
                         
-                        var e_regex = /[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+/;
+                        var e_regex = /[^\s@:/\\<>]+@[^\s@:/\\<>]+\.[^\s@:/\\<>]+/;
 
                         var results = html.match(e_regex);
 

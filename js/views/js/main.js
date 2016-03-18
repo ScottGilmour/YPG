@@ -256,7 +256,7 @@ $(document).ready(function() {
 
 			$.ajax({
 				url: '/crawl',
-				type: 'get',
+				type: 'post',
 				data: {urls: website_urls},
 			})
 			.done(function(rs) {
