@@ -184,7 +184,7 @@ module.exports = function(app, passport) {
         var new_url_list = [];
 
         for (var i = 0; i < urls.length; i++) {
-            if (new_url_list.indexOf(urls[i]) != -1) {
+            if (new_url_list.indexOf(urls[i]) == -1) {
                 new_url_list.push(urls[i]);
             }
         }
