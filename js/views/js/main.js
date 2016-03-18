@@ -1,5 +1,9 @@
 var outside_content = [];
 var selected_content = [];
+
+var max_results = 100;
+var current_index = 0;
+
 $(document).ready(function() {
 	var content = [];
 	var field_count = 0;
@@ -71,7 +75,7 @@ $(document).ready(function() {
 					field_count += rs.length;
 					current_page = current_page + 1;
 					$('#results').html(field_count);
-					if (current_page < 10) {
+					if (current_page < 5) {
 						fetchListings(query, loc, current_page);
 					} else {
 						console.log('Max pages reached');
@@ -170,25 +174,25 @@ $(document).ready(function() {
 	}
 
 	function buildTable(rs) {
-		for (var i = 0; i < rs.length; i++) {
+		for (current_index; current_index < max_results; current_index++) {
 
 			//Append new table row
-			var html = '<tr id="result_row_' + i + '">';
+			var html = '<tr id="result_row_' + current_index + '">';
 
 			html += '<td class="collapsing">' +
 				        '<div class="ui fitted slider result_list checkbox">' +
-				          '<input id="' + i + '" type="checkbox"> <label></label>' +
+				          '<input id="' + current_index + '" type="checkbox"> <label></label>' +
 				        '</div>' +
 				      '</td>';
 
-			html += '<td>' + rs[i].title + '</td>';
-			html += '<td>' + rs[i].addr + '</td>';
-			html += '<td>' + rs[i].city + '</td>';
-			html += '<td>' + rs[i].region + '</td>';
-			html += '<td>' + rs[i].postal + '</td>';
-			html += '<td>' + rs[i].phone + '</td>';
+			html += '<td>' + rs[current_index].title + '</td>';
+			html += '<td>' + rs[current_index].addr + '</td>';
+			html += '<td>' + rs[current_index].city + '</td>';
+			html += '<td>' + rs[current_index].region + '</td>';
+			html += '<td>' + rs[current_index].postal + '</td>';
+			html += '<td>' + rs[current_index].phone + '</td>';
 			
-			html += '<td><a class="website_url" href="' + rs[i].website + '">' + rs[i].website + '</a></td>';
+			html += '<td><a class="website_url" href="' + rs[current_index].website + '">' + rs[current_index].website + '</a></td>';
 
 			html += '</tr>';
 
