@@ -40,7 +40,7 @@ $(document).ready(function() {
 			html += '</tr>';
 
 			//Append new table row
-			$('#tbody').append(html);
+			$('#contact_tbody').append(html);
 		}
 		setEventListeners();
 	}
