@@ -7,8 +7,6 @@ $(document).ready(function() {
 	var field_count = 0;
 	var current_page = 0;
 
-
-
 	if(window.location.href.indexOf("https") > -1) {
        window.location.replace("http://104.196.23.57/scraper");
     }
