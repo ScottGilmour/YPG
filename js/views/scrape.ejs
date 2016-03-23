@@ -167,11 +167,11 @@
     <div class="ui bottom attached tab segment" data-tab="forth">
       <% if (user.local.active_until > new Date()) { %>
           <div class="ui top attached tabular menu">
-            <a class="item active" data-tab="first">Integration</a>
-            <a class="item" data-tab="second">Locale</a>
-            <a class="item" data-tab="third">Account</a>
+            <a class="item active" data-tab="settings_first">Integration</a>
+            <a class="item" data-tab="settings_second">Locale</a>
+            <a class="item" data-tab="settings_third">Account</a>
           </div>
-          <div class="ui bottom attached tab segment active" data-tab="first">
+          <div class="ui bottom attached tab segment active" data-tab="settings_first">
             <% if (!user.salesforce.active) { %>
             <button class="ui basic button">
               <i class="icon world"></i>
@@ -187,10 +187,10 @@
            <% } %>
             
           </div>
-          <div class="ui bottom attached tab segment" data-tab="second">
+          <div class="ui bottom attached tab segment" data-tab="settings_second">
             
           </div>
-          <div class="ui bottom attached tab segment" data-tab="third">
+          <div class="ui bottom attached tab segment" data-tab="settings_third">
             <div class="ui list">
               <div class="item">
                 <i class="users icon"></i>
