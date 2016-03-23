@@ -17,6 +17,11 @@
       <a class="item" data-tab="second">Contacts</a>
       <a class="item" data-tab="third">Emails</a>
       <a class="item" data-tab="forth">Settings</a>
+      <div class="right menu">
+        <div class="item">
+            <a class="ui button" href="/logout">Logout <%= user.local.email %></a>
+        </div>
+      </div>
     </div>
     <div class="ui bottom attached tab segment active" data-tab="first">
         <% if (user.local.active_until > new Date()) { %>
