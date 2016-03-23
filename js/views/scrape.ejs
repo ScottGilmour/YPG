@@ -18,7 +18,7 @@
       <a class="item" data-tab="third">Emails</a>
       <a class="item" data-tab="forth">Settings</a>
     </div>
-    <div class="ui bottom attached tab segment" data-tab="first">
+    <div class="ui bottom attached tab segment active" data-tab="first">
         <% if (user.local.active_until > new Date()) { %>
             <div class="ui grid">
                 <div class="row eight wide column">
@@ -119,13 +119,131 @@
             <% } %>
     </div>
     <div class="ui bottom attached tab segment" data-tab="second">
-      Second
+      <% if (user.local.active_until > new Date()) { %>
+        <div class="ui segment">
+          <table class="ui celled table">
+            <thead>
+                <tr id="headers">
+                    <th>Actions</th>
+                    <th>Title</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Region</th>
+                    <th>Postal</th>
+                    <th>Phone</th>
+                    <th>Website</th>
+                </tr>
+            </thead>
+              <tbody id="tbody">
+                
+              </tbody>
+            </table>
+        </div>
+        <% } else { %>
+               <div class="ui middle aligned center aligned grid">
+
+                  <div class="">
+                  <br>
+                  <br>
+                    <h2 class="ui teal image header">
+                      <div class="content">
+                        Error
+                      </div>
+                    </h2>
+
+                    <div class="ui message">
+                      <div class="header">
+                        Error
+                      </div>
+                      <p>You are not a member and therefore cannot use the contact database tool. <a href="/payment">Join us for unlimited access!</a></p>
+                    </div> 
+                  </div>
+                </div>
+        <% } %>
     </div>
-    <div class="ui bottom attached tab segment active" data-tab="third">
+    <div class="ui bottom attached tab segment" data-tab="third">
       Third
     </div>
-    <div class="ui bottom attached tab segment active" data-tab="forth">
-      Fourth
+    <div class="ui bottom attached tab segment" data-tab="forth">
+      <% if (user.local.active_until > new Date()) { %>
+          <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="first">Integration</a>
+            <a class="item" data-tab="second">Locale</a>
+            <a class="item" data-tab="third">Account</a>
+          </div>
+          <div class="ui bottom attached tab segment active" data-tab="first">
+            <% if (!user.salesforce.active) { %>
+            <button class="ui basic button">
+              <i class="icon world"></i>
+                <a href="/oauth2/auth">Authorize Salesforce</a>
+            </button>
+          <% } else { %>
+
+            <button class="ui basic button disabled">
+              <i class="icon world"></i>
+              Authorized
+            </button>
+
+           <% } %>
+            
+          </div>
+          <div class="ui bottom attached tab segment" data-tab="second">
+            
+          </div>
+          <div class="ui bottom attached tab segment" data-tab="third">
+            <div class="ui list">
+              <div class="item">
+                <i class="users icon"></i>
+                <div class="content">
+                  <%= user.local.firstname + ', ' + user.local.lastname %>
+                </div>
+              </div>
+              <div class="item">
+                <i class="marker icon"></i>
+                <div class="content">
+                  <%= user.local.locale %>
+                </div>
+              </div>
+              <div class="item">
+                <i class="mail icon"></i>
+                <div class="content">
+                  <%= user.local.email %>
+                </div>
+              </div>
+              <div class="item">
+                <i class="linkify icon"></i>
+                <div class="content">
+                  Active until: <%= user.local.active_until %>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <button id="unsubscribe" class="ui basic button">
+              Unsubscribe
+            </button>
+          </div>
+        
+        <% } else { %>
+               <div class="ui middle aligned center aligned grid">
+
+                  <div class="">
+                  <br>
+                  <br>
+                    <h2 class="ui teal image header">
+                      <div class="content">
+                        Error
+                      </div>
+                    </h2>
+
+                    <div class="ui message">
+                      <div class="header">
+                        Error
+                      </div>
+                      <p>You are not a member and therefore cannot use the contact database tool. <a href="/payment">Join us for unlimited access!</a></p>
+                    </div> 
+                  </div>
+                </div>
+        <% } %>
     </div>
 
     <!-- <div class="ui pointing menu">
