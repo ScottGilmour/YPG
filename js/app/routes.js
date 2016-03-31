@@ -211,19 +211,22 @@ module.exports = function(app, passport) {
                         if (results) {
                             user.emails.list.push(results[0]);
                             console.log(results[0]);
+                            console.log(user.emails.list);
+
+                            if (i == new_url_list.length) {
+                                user.save(function(err) {
+                                    if (err)
+                                        throw err;
+
+                                    console.log('saved user');
+                                });
+                            }
                         } 
                     } else {
                         console.log(error);
                     }
                 });
             };
-
-            user.save(function(err) {
-                if (err)
-                    throw err;
-
-                res.sendStatus(200);
-            });
             
         } else {
             res.sendStatus(403);
