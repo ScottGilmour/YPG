@@ -218,7 +218,12 @@ module.exports = function(app, passport) {
                 });
             };
 
-            res.sendStatus(200);
+            user.save(function(err) {
+                if (err)
+                    throw err;
+
+                res.sendStatus(200);
+            });
             
         } else {
             res.sendStatus(403);
