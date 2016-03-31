@@ -213,6 +213,8 @@ module.exports = function(app, passport) {
                             console.log(results[0]);
                             console.log(user.emails.list);
 
+                            console.log(i + ' / ' + new_url_list.length);
+
                             if (i == new_url_list.length) {
                                 user.save(function(err) {
                                     if (err)
