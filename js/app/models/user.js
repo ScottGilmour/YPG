@@ -17,6 +17,11 @@ var userSchema = mongoose.Schema({
         credits      : Number,
         subscription : mongoose.Schema.Types.Mixed
     },
+    emails           : {
+        list         : [String],
+        date_created : { type: Date, default: Date.now },
+        keyword      : String
+    },
     facebook         : {
         id           : String,
         token        : String,

@@ -14,8 +14,6 @@ var oauth2 = new jsforce.OAuth2({
     redirectUri : 'https://104.196.23.57/oauth_callback'
 });
 
-var email_list = [];
-
 module.exports = function(app, passport) {
 
     // =====================================
@@ -171,16 +169,17 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.get('/crawl_list', isLoggedIn, function(req, res) {
-        if (email_list.length > 0) {
-            res.send(email_list);
-        } else {
-            res.send('No emails found');
+    app.get('/get_emails', isLoggedIn, function(req, res) {
+        var user = req.user;
+
+        if (user.emails.list.length > 1) {
+            res.send(user.emails.list);
         }
     });
 
     app.post('/crawl', isLoggedIn, function(req, res) {
         var urls = req.body.urls;
+        var user = req.user;
         var new_url_list = [];
 
         for (var i = 0; i < urls.length; i++) {
@@ -190,7 +189,6 @@ module.exports = function(app, passport) {
         }
 
         console.log('Crawling ' + new_url_list.length + ' urls');
-
 
         //Take in a website url
         if (new_url_list) {
@@ -205,7 +203,7 @@ module.exports = function(app, passport) {
                         var results = html.match(e_regex);
 
                         if (results) {
-                            email_list.push(results[0]);
+                            user.emails.list.push(results[0]);
                             console.log(results[0]);
                         } 
                     } else {

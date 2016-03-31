@@ -166,9 +166,23 @@
                 </div>
         <% } %>
     </div>
+
     <div class="ui bottom attached tab segment" data-tab="third">
-      Third
+        
+        <table class="ui celled table">
+            <thead>
+                <tr id="headers">
+                    <th>Title</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+              <tbody id="email_tbody">
+                
+              </tbody>
+            </table>
+
     </div>
+
     <div class="ui bottom attached tab segment" data-tab="forth">
       <% if (user.local.active_until > new Date()) { %>
           <div class="ui top attached tabular menu">
