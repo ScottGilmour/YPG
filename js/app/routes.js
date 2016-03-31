@@ -172,9 +172,15 @@ module.exports = function(app, passport) {
     app.get('/get_emails', isLoggedIn, function(req, res) {
         var user = req.user;
 
+        if (user.emails.list) {
+            console.log(user.emails.list);
+        }
+
         if (user.emails.list.length > 1) {
             res.send(user.emails.list);
         }
+
+        res.sendStatus(200);
     });
 
     app.post('/crawl', isLoggedIn, function(req, res) {
