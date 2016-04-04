@@ -203,7 +203,7 @@ module.exports = function(app, passport) {
                 //Request page html
                 request(new_url_list[i], function(error, response, html) {
                     if (!error) {
-
+                        console.log(response);
                         var e_regex = /[^\s@:/"\\<>]+@[^\s@:/"\\<>]+\.[^\s@:/"\\<>]+/;
 
                         var results = html.match(e_regex);
@@ -211,18 +211,6 @@ module.exports = function(app, passport) {
                         if (results) {
                             user.emails.list.push(results[0]);
                             console.log(results[0]);
-                            console.log(user.emails.list);
-
-                            console.log(i + ' / ' + new_url_list.length);
-
-                            if (i == new_url_list.length) {
-                                user.save(function(err) {
-                                    if (err)
-                                        throw err;
-
-                                    console.log('saved user');
-                                });
-                            }
                         } 
                     } else {
                         console.log(error);

@@ -145,7 +145,7 @@ $(document).ready(function() {
 		});
 
 		$('#pullEmails').click(function(ev) {
-			pullEmailsLocal();
+			pullEmails();
 		});
 
 		$('.result_list.checkbox').checkbox({
@@ -230,41 +230,6 @@ $(document).ready(function() {
 		$('.result_list.checkbox').off();
 		$('#selectNone').off();
 		$('#selectAll').off();
-	}
-
-	function pullEmailsLocal() {
-		var website_urls = [];
-
-		$('#pullEmails').addClass('disabled');
-
-		if (selected_content.length > 0) {
-			for (var i = 0; i < selected_content.length; i++) {
-				if (selected_content[i].website.length > 10) {
-					website_urls.push(selected_content[i].website);
-
-					$.ajax({
-						url: selected_content[i].website
-					})
-					.done(function(rs) {
-						console.log("success");
-						var e_regex = /[^\s@:/"\\<>]+@[^\s@:/"\\<>]+\.[^\s@:/"\\<>]+/;
-                        var results = html.match(e_regex);
-
-                        console.log(results);
-					})
-					.fail(function(rs) {
-						console.log("error");
-					})
-					.always(function(rs) {
-						console.log("complete");
-					});
-					
-
-				}
-			};
-
-			
-		}
 	}
 
 	function pullEmails() {
