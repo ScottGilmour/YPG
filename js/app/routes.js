@@ -180,6 +180,17 @@ module.exports = function(app, passport) {
         }
     });
 
+    app.post('/delete_emails', isLoggedIn, function(req, res) {
+        var user = req.user;
+
+        if (user) {
+            user.emails.list = [];
+            res.sendStatus(200);
+        } else {
+            res.send('No user found');
+        }
+    });
+
     app.post('/crawl', isLoggedIn, function(req, res) {
         var urls = req.body.urls;
         var user = req.user;
