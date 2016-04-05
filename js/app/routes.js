@@ -188,6 +188,8 @@ module.exports = function(app, passport) {
         var user = req.user;
         var new_url_list = [];
 
+        var completed_requests = 0;
+
         for (var i = 0; i < urls.length; i++) {
             if (new_url_list.indexOf(urls[i]) == -1) {
                 new_url_list.push(urls[i]);
@@ -202,8 +204,9 @@ module.exports = function(app, passport) {
 
                 //Request page html
                 request(new_url_list[i], function(error, response, html) {
+                    completed_requests++;
                     if (!error) {
-                        console.log(response);
+
                         var e_regex = /[^\s@:/"\\<>]+@[^\s@:/"\\<>]+\.[^\s@:/"\\<>]+/;
 
                         var results = html.match(e_regex);
@@ -214,6 +217,15 @@ module.exports = function(app, passport) {
                         } 
                     } else {
                         console.log(error);
+                    }
+
+                    if (completed_requests == new_url_list.length) {
+                        user.save(function(err) {
+                            if (err)
+                                throw err;
+
+                            res.send('added contact');
+                        });
                     }
                 });
             };
