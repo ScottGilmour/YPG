@@ -174,9 +174,6 @@ module.exports = function(app, passport) {
 
         if (user.emails.list) {
             console.log(user.emails.list);
-        }
-
-        if (user.emails.list.length > 1) {
             res.send(user.emails.list);
         }
 
@@ -224,7 +221,7 @@ module.exports = function(app, passport) {
                             if (err)
                                 throw err;
 
-                            res.send('added contact');
+                            console.log('Saved user emails');
                         });
                     }
                 });
