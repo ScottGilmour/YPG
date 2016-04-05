@@ -175,9 +175,9 @@ module.exports = function(app, passport) {
         if (user.emails.list) {
             console.log(user.emails.list);
             res.send(user.emails.list);
+        } else {
+            res.sendStatus(400);
         }
-
-        res.sendStatus(200);
     });
 
     app.post('/crawl', isLoggedIn, function(req, res) {
