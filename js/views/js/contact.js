@@ -1,6 +1,26 @@
 $(document).ready(function() {
 	var content = [];
 
+	loadEmailList();
+
+	function loadEmailList() {
+		$.ajax({
+			url: '/get_emails',
+			type: 'get',
+			dataType: 'json'
+		})
+		.done(function(rs) {
+			console.log("success");
+			buildEmailTable(rs);
+		})
+		.fail(function(rs) {
+			console.log("error " + rs);
+		})
+		.always(function() {
+			console.log("complete");
+		});
+	}
+
 	$.ajax({
 		url: '/fetch_contacts',
 		type: 'get',
@@ -19,6 +39,22 @@ $(document).ready(function() {
 	.always(function() {
 		console.log("complete");
 	});
+
+	function buildEmailTable(rs) {
+		for (var i = 0; i < rs.length; i++) {
+
+			//Append new table row
+			var html = '<tr id="' + i + '">';
+
+			html += '<td>' + rs[i].phone + '</td>';
+
+			html += '</tr>';
+
+			//Append new table row
+			$('#email_tbody').append(html);
+		}
+		setEventListeners();
+	}
 
 	function buildTable(rs) {
 		for (var i = 0; i < rs.length; i++) {

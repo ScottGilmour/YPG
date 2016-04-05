@@ -85,8 +85,6 @@ $(document).ready(function() {
 			});	
 	}
 
-
-
 	$('#saveBtn').click(function(ev) {
 		saveAllSelected('sf', selected_content);
 	});
