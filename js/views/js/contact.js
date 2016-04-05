@@ -46,7 +46,7 @@ $(document).ready(function() {
 			//Append new table row
 			var html = '<tr id="' + i + '">';
 
-			html += '<td>' + rs[i].phone + '</td>';
+			html += '<td>' + rs[i] + '</td>';
 
 			html += '</tr>';
 
