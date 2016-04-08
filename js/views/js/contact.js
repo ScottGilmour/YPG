@@ -46,6 +46,12 @@ $(document).ready(function() {
 			//Append new table row
 			var html = '<tr id="' + i + '">';
 
+			html += '<td class="collapsing">' +
+				        '<div class="ui fitted slider result_list checkbox">' +
+				          '<input id="' + i + '" type="checkbox"> <label></label>' +
+				        '</div>' +
+				      '</td>';
+			
 			html += '<td>' + rs[i] + '</td>';
 
 			html += '</tr>';
