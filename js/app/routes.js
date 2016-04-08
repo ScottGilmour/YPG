@@ -335,22 +335,17 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.post('/add_list', isLoggedIn, function(req, res) {
-        var user = req.user;
-        var list = req.body.list;
-
-        if (user) {
-
-        }
-    });
-
     app.post('/add_contact', isLoggedIn, function(req, res) {
         var user = req.user;
         var contact = req.body.contact;
 
         console.log(contact);
+        res.sendStatus(200);
 
+        /*
         if (user && contact) {
+
+
             var newContact = new Contact();
 
             newContact.title = contact.title;
@@ -371,6 +366,7 @@ module.exports = function(app, passport) {
                 res.send('added contact');
             });
         }
+        */
     });
 
 

@@ -94,8 +94,29 @@ $(document).ready(function() {
 	});
 
 	$('#saveContacts').click(function(event) {
-		
+		saveContacts(selected_content);
 	});
+
+	function saveContacts(contacts) {
+		console.log(contacts);
+
+		$.ajax({
+			url: '/add_contact',
+			type: 'get',
+			dataType: 'json',
+			data: {contact: contacts},
+		})
+		.done(function(rs) {
+			console.log("success");
+			console.log(rs);
+		})
+		.fail(function(rs) {
+			console.log("error");
+		})
+		.always(function(rs) {
+			console.log("complete");
+		});
+	}
 
 	function saveAllSelected(target, contacts) {
 		$('#saveBtn').addClass('disabled');
