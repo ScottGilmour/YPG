@@ -175,15 +175,32 @@
 
     <div class="ui bottom attached tab segment" data-tab="third">
         
-        <table class="ui celled table">
-            <thead>
-                <tr id="headers">
-                    <th>Email</th>
-                </tr>
-            </thead>
+        <table class="ui compact celled definition table">
+                <thead>
+                    <tr id="headers">
+                        <th></th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
             <tbody id="email_tbody">
                 
             </tbody>
+            <tfoot class="full-width">
+                <tr>
+                  <th></th>
+                  <th colspan="7">
+                    <div class="ui small green button" id="selectAll">
+                      Select All
+                    </div>
+                    <div class="ui small red button" id="selectNone">
+                      Select None
+                    </div>
+                    <div id="downloadBtn" class="ui right floated small green labeled icon button">
+                        <i class="download icon"></i> Export Data
+                    </div>
+                  </th>
+                </tr>
+              </tfoot>
         </table>
 
     </div>

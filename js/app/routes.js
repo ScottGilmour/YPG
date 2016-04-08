@@ -149,6 +149,8 @@ module.exports = function(app, passport) {
         } else {
             res.send('ERR: No user found');
         }
+
+        res.sendStatus(300);
     });
 
     //
@@ -215,7 +217,7 @@ module.exports = function(app, passport) {
                     completed_requests++;
                     if (!error) {
 
-                        var e_regex = /[^\s@:?/"\\<>]+@[^\s@:?/"\\<>]+\.[^\s@:/"?\\<>]+/;
+                        var e_regex = /[^\s@:?/'."\\<>]+@[^\s@:?/.'"\\<>]+\.[^\s@:/"'.?\\<>]+/;
 
                         var results = html.match(e_regex);
 

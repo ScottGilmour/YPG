@@ -123,7 +123,7 @@ $(document).ready(function() {
 	}
 
 	function saveAllSelected(target, contacts) {
-		$('#saveBtn').addClass('disabled');
+		$('#saveBtn').addClass('disabled').addClass('loading');
 		if (target == 'sf') {
 
 			var leads = [];
@@ -157,7 +157,7 @@ $(document).ready(function() {
 			.done(function(rs) {
 				alertify.logPosition("bottom right");
 				alertify.success("Created new Salesforce lead");
-				$('#saveBtn').removeClass('disabled');
+				$('#saveBtn').removeClass('disabled').removeClass('loading');
 			})
 			.fail(function(rs) {
 				alertify.error("Error adding Salesforce lead: " + rs);
