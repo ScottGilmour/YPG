@@ -363,7 +363,7 @@ module.exports = function(app, passport) {
                 rawContacts.push(newContact);                        
             };
 
-            Contact.insertMany(rawDocuments)
+            Contact.insertMany(rawContacts)
                 .then(function(mongooseDocuments) {
                     console.log('success?');
                 })
