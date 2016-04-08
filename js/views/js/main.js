@@ -100,6 +100,8 @@ $(document).ready(function() {
 	function saveContacts(contacts) {
 		console.log(contacts);
 
+		$('#saveContacts').addClass('loading').addClass('disabled');
+
 		$.ajax({
 			url: '/add_contact',
 			type: 'post',
@@ -108,13 +110,13 @@ $(document).ready(function() {
 		})
 		.done(function(rs) {
 			console.log("success");
-			console.log(rs);
 		})
 		.fail(function(rs) {
 			console.log("error");
 		})
 		.always(function(rs) {
 			console.log("complete");
+			$('#saveContacts').removeClass('loading').removeClass('disabled');
 		});
 	}
 
@@ -279,8 +281,6 @@ $(document).ready(function() {
 			})
 			.done(function(rs) {
 				console.log(rs);
-				$('#pullEmails').removeClass('disabled');
-				$('#pullEmails').removeClass('loading');
 				alertify.logPosition("bottom right");
 				alertify.success("Added new emails to list");
 			})
@@ -289,6 +289,8 @@ $(document).ready(function() {
 			})
 			.always(function() {
 				console.log("complete");
+				$('#pullEmails').removeClass('disabled');
+				$('#pullEmails').removeClass('loading');
 			});
 		}
 	}

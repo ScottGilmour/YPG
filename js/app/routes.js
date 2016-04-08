@@ -173,7 +173,6 @@ module.exports = function(app, passport) {
         var user = req.user;
 
         if (user.emails.list) {
-            console.log(user.emails.list);
             res.send(user.emails.list);
         } else {
             res.sendStatus(400);
