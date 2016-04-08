@@ -132,7 +132,7 @@ module.exports = function(app, passport) {
             //Country
 
             console.log(lead);
-/*
+
             // Single record creation
             conn.sobject("Lead").create(
                 lead, 
@@ -145,7 +145,7 @@ module.exports = function(app, passport) {
                         }
                         res.sendStatus(200);
                     });
-*/
+
         } else {
             res.send('ERR: No user found');
         }
