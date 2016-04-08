@@ -5,7 +5,7 @@ var phones = [];
 $(document).ready(function() {
 	var content = [];
 	var field_count = 0;
-	var current_page = 0;
+	var current_page = 1;
 
 	if(window.location.href.indexOf("https") > -1) {
        window.location.replace("http://104.196.23.57/scraper");
@@ -248,7 +248,7 @@ $(document).ready(function() {
 	});
 
 	function resetSearch() {
-		current_page = 0;
+		current_page = 1;
 		field_count = 0;
 		phones = [];
 		$('#tbody').empty();

@@ -360,17 +360,22 @@ module.exports = function(app, passport) {
                 newContact.user_email = user.local.email;
                 newContact.active = true;
                 
-                rawContacts.push(newContact);                        
+                rawContacts.push(newContact);  
+
+                Contact.create(rawContacts, function (err, res) {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    console.log('Saved contacts');
+                });
+                   
             };
 
-            Contact.insertMany(rawContacts)
-                .then(function(mongooseDocuments) {
-                    console.log('success?');
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+
         }
+
+        res.sendStatus(200);
 
         /*
         if (user && contact) {
