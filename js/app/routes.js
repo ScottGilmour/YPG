@@ -342,6 +342,32 @@ module.exports = function(app, passport) {
         console.log(contact);
         res.sendStatus(200);
 
+        if (user && contact) {
+
+            var rawContacts = [];
+
+            for (var i = 0; i < contact.length; i++) {
+                var newContact = new Contact();
+
+                newContact.title = contact[i].title;
+                newContact.address = contact[i].addr;
+                newContact.postal = contact[i].postal;
+                newContact.region = contact[i].region;
+                newContact.city = contact[i].city;
+                newContact.phone = contact[i].phone;
+                newContact.website = contact[i].website;
+
+                newContact.user_email = user.local.email;
+                newContact.active = true;
+                
+                rawContacts.push(newContact);                        
+            };
+
+            Contact.insertMany(rawContacts, function (err, mongooseDocuments { 
+                console.log('success?');
+            });
+        }
+
         /*
         if (user && contact) {
 
