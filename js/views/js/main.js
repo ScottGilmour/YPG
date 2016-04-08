@@ -110,6 +110,8 @@ $(document).ready(function() {
 		})
 		.done(function(rs) {
 			console.log("success");
+			alertify.logPosition("bottom right");
+			alertify.success("Added new contacts to list");
 		})
 		.fail(function(rs) {
 			console.log("error");
