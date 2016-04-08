@@ -363,9 +363,13 @@ module.exports = function(app, passport) {
                 rawContacts.push(newContact);                        
             };
 
-            Contact.insertMany(rawContacts, function (err, mongooseDocuments { 
-                console.log('success?');
-            });
+            Contact.insertMany(rawDocuments)
+                .then(function(mongooseDocuments) {
+                    console.log('success?');
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
         }
 
         /*
