@@ -89,6 +89,14 @@ $(document).ready(function() {
 		saveAllSelected('sf', selected_content);
 	});
 
+	$('#downloadBtn').click(function(event) {
+		
+	});
+
+	$('#saveContacts').click(function(event) {
+		
+	});
+
 	function saveAllSelected(target, contacts) {
 		$('#saveBtn').addClass('disabled');
 		if (target == 'sf') {
@@ -234,6 +242,7 @@ $(document).ready(function() {
 		var website_urls = [];
 
 		$('#pullEmails').addClass('disabled');
+		$('#pullEmails').addClass('loading');
 
 		if (selected_content.length > 0) {
 			for (var i = 0; i < selected_content.length; i++) {
@@ -250,6 +259,7 @@ $(document).ready(function() {
 			.done(function(rs) {
 				console.log(rs);
 				$('#pullEmails').removeClass('disabled');
+				$('#pullEmails').removeClass('loading');
 				alertify.logPosition("bottom right");
 				alertify.success("Added new emails to list");
 			})
