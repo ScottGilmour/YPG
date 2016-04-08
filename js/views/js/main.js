@@ -102,7 +102,7 @@ $(document).ready(function() {
 
 		$.ajax({
 			url: '/add_contact',
-			type: 'get',
+			type: 'post',
 			dataType: 'json',
 			data: {contact: contacts},
 		})
