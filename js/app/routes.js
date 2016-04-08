@@ -361,16 +361,16 @@ module.exports = function(app, passport) {
                 newContact.active = true;
                 
                 rawContacts.push(newContact);  
-
-                Contact.create(rawContacts, function (err, res) {
-                    if (err) {
-                        console.log(err);
-                    }
-
-                    console.log('Saved contacts');
-                });
                    
             };
+
+            Contact.create(rawContacts, function (err, res) {
+                if (err) {
+                    console.log(err);
+                }
+
+                console.log('Saved contacts');
+            });
 
 
         }
