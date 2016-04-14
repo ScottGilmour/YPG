@@ -264,7 +264,7 @@ module.exports = function(app, passport) {
                 request(new_url_list[i], function(error, response, html) {
                     completed_requests++;
                     if (!error) {
-                        var e_regex = /[^\s@:?/'."\\<>]+@[^\s@:?/.'"\\<>]+\.[^\s@:/"'.?\\<>]+/;
+                        var e_regex = /[^\s@:?&/'."\\<>]+@[^\s@:?/&.'"\\<>]+\.[^\s@:/"'.&?\\<>]+/;
 
                         var results = html.match(e_regex);
             
