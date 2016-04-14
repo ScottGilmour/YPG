@@ -269,8 +269,10 @@ module.exports = function(app, passport) {
                         var results = html.match(e_regex);
             
                         if (results) {
-                            user.emails.list.push(results[0]);
-                            console.log(results[0]);
+                            if (user.emails.list.indexOf(results[0]) == -1) {
+                                user.emails.list.push(results[0]);
+                                console.log(results[0]);
+                            }
                         } 
                     } else {
                         console.log(error);
