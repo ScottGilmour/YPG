@@ -176,15 +176,22 @@ module.exports = function(app, passport) {
         var user = req.user;
 
         if (user.emails.list) {
-            var json = JSON.stringify(user.emails.list); // so let's encode it
+            //var json = JSON.stringify(user.emails.list); // so let's encode it
             
+
+            var result = '';
+
+            for (var i = 0; i < user.emails.list.length; i++) {
+                result += user.emails.list[i] + '\n';
+            };
+
 
             var filename = 'emails.json'; // or whatever
             var mimetype = 'application/json';
 
             res.setHeader('Content-disposition', 'attachment; filename=' + filename);
             res.setHeader('Content-type', mimetype);
-            res.send(json); 
+            res.send(result); 
 
 
         } else {
