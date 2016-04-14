@@ -172,6 +172,17 @@ module.exports = function(app, passport) {
         }
     });
 
+    app.post('/delete_emails', isLoggedIn, function(req, res) {
+        var user = req.user;
+
+        if (user.emails.list) {
+            user.emails.list = [];
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(500);
+        }
+    });
+
     app.get('/get_emails_csv', isLoggedIn, function(req, res) {
         var user = req.user;
 
@@ -182,7 +193,7 @@ module.exports = function(app, passport) {
             var result = '';
 
             for (var i = 0; i < user.emails.list.length; i++) {
-                result += user.emails.list[i] + '\n';
+                result += user.emails.list[i] + ', ';
             };
 
 

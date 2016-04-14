@@ -94,6 +94,24 @@ $(document).ready(function() {
 		
 	});
 
+	$('#deleteEmailsBtn').click(function(event) {
+		$.ajax({
+			url: '/delete_emails',
+			type: 'post'
+		})
+		.done(function() {
+			alertify.logPosition("bottom right");
+			alertify.success("Deleted all emails");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+	});
+
 	$('#saveContacts').click(function(event) {
 		saveContacts(selected_content);
 	});
