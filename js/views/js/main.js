@@ -90,19 +90,7 @@ $(document).ready(function() {
 	});
 
 	$('#downloadBtn').click(function(event) {
-		$.ajax({
-			url: '/get_emails_csv',
-			type: 'get'
-		})
-		.done(function(rs) {
-			console.log(rs);
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
-		});
+		window.location = "/get_emails_csv";
 		
 	});
 
