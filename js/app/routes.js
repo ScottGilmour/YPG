@@ -201,7 +201,7 @@ module.exports = function(app, passport) {
             var result = '';
 
             for (var i = 0; i < user.emails.list.length; i++) {
-                result += user.emails.list[i] + '/n';
+                result += user.emails.list[i] + '\r\n';
             };
 
 
