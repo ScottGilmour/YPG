@@ -265,7 +265,11 @@ module.exports = function(app, passport) {
                     completed_requests++;
                     if (!error) {
 
+                        html = html.replace(/[^a-zA-Z0-9 .@]/g, "");
+
                         var e_regex = /[^\s@:?/'."\\<>]+@[^\s@:?/.'"\\<>]+\.[^\s@:/"'.?\\<>]+/;
+                        
+                    
 
                         var results = html.match(e_regex);
 
