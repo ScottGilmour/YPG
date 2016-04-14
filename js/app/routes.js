@@ -264,7 +264,6 @@ module.exports = function(app, passport) {
                 request(new_url_list[i], function(error, response, html) {
                     completed_requests++;
                     if (!error) {
-                        html.replace(/[^a-zA-Z0-9 .@]/g, "");
                         var e_regex = /[^\s@:?/'."\\<>]+@[^\s@:?/.'"\\<>]+\.[^\s@:/"'.?\\<>]+/;
                         
                     
@@ -272,7 +271,7 @@ module.exports = function(app, passport) {
                         var results = html.match(e_regex);
             
                         if (results) {
-
+                            results[0].replace(/[^a-zA-Z0-9 .@]/g, "");
                             user.emails.list.push(results[0]);
                             console.log(results[0]);
                         } 

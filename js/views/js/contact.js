@@ -45,6 +45,8 @@ $(document).ready(function() {
 	});
 
 	function buildEmailTable(rs) {
+		$('#email_tbody').empty();
+
 		for (var i = 0; i < rs.length; i++) {
 
 			//Append new table row
