@@ -172,6 +172,17 @@ module.exports = function(app, passport) {
         }
     });
 
+    app.get('/get_emails_csv', isLoggedIn, function(req, res) {
+        var user = req.user;
+
+        if (user.emails.list) {
+            res.csv(user.emails.list);
+        }
+
+        res.sendStatus(400);
+
+    });
+
     app.get('/get_emails', isLoggedIn, function(req, res) {
         var user = req.user;
 
