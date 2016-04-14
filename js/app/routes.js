@@ -1,4 +1,4 @@
-var stripe = require("stripe")("sk_test_4Z6MsyQ0i4xl0Zm6JWR5wwrq");
+var stripe = require("stripe")("sk_live_ChhCY4SuQzZSewMCEx5cKsaG");
 var Contact = require('../app/models/contact');
 var User = require('../app/models/user');
 var moment = require('moment');
@@ -181,7 +181,7 @@ module.exports = function(app, passport) {
             user.save(function(err) {
                 if (err)
                     throw err;
-                
+
                 console.log('Deleted emails');
             });
 
@@ -201,7 +201,7 @@ module.exports = function(app, passport) {
             var result = '';
 
             for (var i = 0; i < user.emails.list.length; i++) {
-                result += user.emails.list[i] + ', ';
+                result += user.emails.list[i] + '/n';
             };
 
 
