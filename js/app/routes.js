@@ -184,7 +184,7 @@ module.exports = function(app, passport) {
 
             res.setHeader('Content-disposition', 'attachment; filename=' + filename);
             res.setHeader('Content-type', mimetype);
-            res.sendFile(json); 
+            res.send(json); 
 
 
         } else {
