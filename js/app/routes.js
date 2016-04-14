@@ -176,9 +176,15 @@ module.exports = function(app, passport) {
         var user = req.user;
 
         if (user.emails.list) {
-            res.csv(user.emails.list);
-        } else {
-            res.csv(['a', 'b', 'c']);
+            var result = [];
+
+            res.contentType('csv');
+
+            csv().from(user.emails.list).on('data', function(data) {
+                result.push(data.join());
+            }).on('end', function() {
+                res.send(result.join('\n'));
+            });
         }
 
         
