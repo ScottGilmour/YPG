@@ -94,6 +94,7 @@ $(document).ready(function() {
 		
 	});
 
+
 	$('#deleteEmailsBtn').click(function(event) {
 		$.ajax({
 			url: '/delete_emails',

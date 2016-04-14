@@ -3,6 +3,10 @@ $(document).ready(function() {
 
 	loadEmailList();
 
+	$('#emailTab').click(function(ev) {
+		loadEmailList();
+	});
+
 	function loadEmailList() {
 		$.ajax({
 			url: '/get_emails',
