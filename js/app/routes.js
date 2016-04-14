@@ -177,15 +177,16 @@ module.exports = function(app, passport) {
 
         if (user.emails.list) {
             var json = JSON.stringify(user.emails.list); // so let's encode it
-            /*
+            
+
             var filename = 'emails.json'; // or whatever
             var mimetype = 'application/json';
 
             res.setHeader('Content-disposition', 'attachment; filename=' + filename);
             res.setHeader('Content-type', mimetype);
-            res.write(json); */
+            res.sendFile(json); 
 
-            res.csv(json);
+
         } else {
             res.sendStatus(400);
         }
