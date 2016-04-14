@@ -102,6 +102,7 @@ $(document).ready(function() {
 		.done(function() {
 			alertify.logPosition("bottom right");
 			alertify.success("Deleted all emails");
+			location.reload();
 		})
 		.fail(function() {
 			console.log("error");
@@ -110,6 +111,7 @@ $(document).ready(function() {
 			console.log("complete");
 		});
 		
+
 	});
 
 	$('#saveContacts').click(function(event) {

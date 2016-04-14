@@ -177,6 +177,14 @@ module.exports = function(app, passport) {
 
         if (user.emails.list) {
             user.emails.list = [];
+
+            user.save(function(err) {
+                if (err)
+                    throw err;
+                
+                console.log('Deleted emails');
+            });
+
             res.sendStatus(200);
         } else {
             res.sendStatus(500);
