@@ -177,9 +177,11 @@ module.exports = function(app, passport) {
 
         if (user.emails.list) {
             res.csv(user.emails.list);
+        } else {
+            res.csv(['a', 'b', 'c']);
         }
 
-        res.sendStatus(400);
+        
 
     });
 
