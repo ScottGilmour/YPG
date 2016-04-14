@@ -265,13 +265,10 @@ module.exports = function(app, passport) {
                     completed_requests++;
                     if (!error) {
                         var e_regex = /[^\s@:?/'."\\<>]+@[^\s@:?/.'"\\<>]+\.[^\s@:/"'.?\\<>]+/;
-                        
-                    
 
                         var results = html.match(e_regex);
             
                         if (results) {
-                            results[0].replace(/[^a-zA-Z0-9 .@]/g, "");
                             user.emails.list.push(results[0]);
                             console.log(results[0]);
                         } 
